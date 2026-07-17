@@ -913,10 +913,8 @@ a:hover {
   letter-spacing: 2px;
 }
 
-
-
 /* ===================================================
-   COMPONENTE: TABLA DE CLASIFICACIÓN (clasificacionFLC)
+   COMPONENTE: CLASIFICACIÓN EN VIVO (clasificacionFLC)
    =================================================== */
 
 .clasificacionFLC-section {
@@ -926,22 +924,30 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden; /* Evita fugas visuales hacia los lados */
 }
 
 .clasificacionFLC-container {
   max-width: 1200px;
   width: 100%;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr; /* Le otorgamos un poco más de peso al texto */
+  grid-template-columns: 0.9fr 1.1fr;
   gap: 4rem;
   align-items: center;
+  min-width: 0; /* CLAVE 1: Evita que el Grid se estire infinitamente */
 }
 
-/* --- COLUMNA IZQUIERDA: TEXTO --- */
+/* Asegurar que ningún elemento hijo directo rompa el contenedor */
+.clasificacionFLC-container > * {
+  min-width: 0; /* CLAVE 2: Forzar comportamiento flexible en subcontenedores */
+}
+
+/* --- COLUMNA IZQUIERDA (TEXTO) --- */
 .clasificacionFLC-info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
 }
 
 .clasificacionFLC-tag {
@@ -961,6 +967,7 @@ a:hover {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1.5rem;
+  word-break: break-word; /* Evita que palabras largas corten la pantalla */
 }
 
 .text-dorado {
@@ -974,7 +981,6 @@ a:hover {
   margin-bottom: 2rem;
 }
 
-/* Frase motivacional decorada */
 .clasificacionFLC-quote {
   border-left: 3px solid var(--color-rojo, #9B111E);
   padding-left: 20px;
@@ -996,101 +1002,158 @@ a:hover {
   line-height: 1.6;
 }
 
-/* --- COLUMNA DERECHA: IMAGEN DEL RESULTADO --- */
-.clasificacionFLC-media {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* --- COLUMNA DERECHA (TABLA DE GOOGLE) --- */
+.clasificacionFLC-tabla-wrapper {
   width: 100%;
-}
-
-.clasificacionFLC-img-frame {
-  position: relative;
-  width: 100%;
-  max-width: 480px; /* Tamaño ideal para capturas verticales/horizontales de tablas */
-  border-radius: 12px;
+  max-width: 100%; /* CLAVE 3: Limita el ancho al 100% de la columna asignada */
+  background-color: #1a1a1a;
   border: 1px solid rgba(212, 175, 55, 0.2);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
-  overflow: hidden;
-  transition: transform 0.4s ease, border-color 0.4s ease;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box; /* Asegura que el padding no sume tamaño extra */
 }
 
-.clasificacionFLC-img {
+.tabla-scroll-container {
   width: 100%;
-  height: auto;
+  overflow-x: auto; /* CLAVE 4: El scroll lateral se queda encapsulado aquí */
   display: block;
-  object-fit: contain; /* Muestra el resultado completo sin recortes molestos */
-  transition: transform 0.6s ease;
+  -webkit-overflow-scrolling: touch; /* Scroll fluido y nativo en iOS/Android */
 }
 
-/* Resplandor radial de fondo en la tarjeta */
-.clasificacionFLC-glow {
-  position: absolute;
-  top: 0;
-  left: 0;
+.tabla-flc {
   width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, rgba(0,0,0,0) 70%);
-  pointer-events: none;
+  min-width: 650px; /* CLAVE 5: Mantiene espacio saludable para las 9 columnas sin amontonar texto */
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  font-family: 'Lato', sans-serif;
+  color: #ffffff;
+  text-align: left;
 }
 
-/* Efectos Interactivos (Hover) */
-.clasificacionFLC-img-frame:hover {
-  transform: translateY(-6px);
-  border-color: var(--color-dorado, #D4AF37);
-  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15);
+/* Cabeceras */
+.tabla-flc th {
+  background-color: #121212;
+  color: var(--color-dorado, #D4AF37);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  padding: 15px;
+  border-bottom: 2px solid var(--color-dorado, #D4AF37);
 }
 
-.clasificacionFLC-img-frame:hover .clasificacionFLC-img {
-  transform: scale(1.03); /* Zoom muy sutil y elegante */
+/* Celdas generales */
+.tabla-flc td {
+  padding: 12px 15px;
+  background-color: #222222;
+  font-size: 0.95rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 }
 
-/* --- ADAPTACIÓN RESPONSIVE --- */
+/* Bordes redondeados por fila */
+.tabla-flc tr td:first-child, 
+.tabla-flc tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.tabla-flc tr td:last-child, 
+.tabla-flc tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Alinear datos al centro, excepto el nombre del equipo */
+.tabla-flc td:not(:nth-child(2)) {
+  text-align: center;
+}
+
+/* Filas alternas */
+.tabla-flc tbody tr:nth-child(even) td {
+  background-color: #1d1d1d;
+}
+
+/* --- DISEÑO DE LÍDER (1ER LUGAR) --- */
+.tabla-flc tr.primer-lugar td {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.25) 0%, rgba(155, 17, 30, 0.1) 100%) !important;
+  border-top: 1px solid var(--color-dorado, #D4AF37);
+  border-bottom: 1px solid var(--color-dorado, #D4AF37);
+  color: var(--color-dorado, #D4AF37);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.tabla-flc tr.primer-lugar td:first-child {
+  border-left: 2px solid var(--color-dorado, #D4AF37);
+}
+
+.tabla-flc tr.primer-lugar td:last-child {
+  border-right: 2px solid var(--color-dorado, #D4AF37);
+}
+
+/* Hover en filas */
+.tabla-flc tbody tr:hover td {
+  background-color: #2a2a2a;
+}
+
+/* Estilizar scrollbar de la tabla */
+.tabla-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+.tabla-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgba(212, 175, 55, 0.3);
+  border-radius: 10px;
+}
+
+/* --- RESPONSIVE OPTIMIZADO (MÓVIL) --- */
 @media screen and (max-width: 992px) {
   .clasificacionFLC-container {
-    gap: 2.5rem;
-  }
-  .clasificacionFLC-title {
-    font-size: 2.2rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .clasificacionFLC-section {
-    padding: 4rem 1.5rem;
-  }
-  
-  /* Pasa de fila horizontal a columna vertical */
-  .clasificacionFLC-container {
     grid-template-columns: 1fr;
-    gap: 3.5rem;
-    text-align: center;
+    gap: 3rem;
   }
-  
   .clasificacionFLC-info {
     align-items: center;
+    text-align: center;
   }
-  
   .clasificacionFLC-divider {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 2rem auto;
   }
-  
-  /* Modificamos la decoración del quote para móviles */
   .clasificacionFLC-quote {
     border-left: none;
     border-top: 1px solid var(--color-rojo, #9B111E);
     border-bottom: 1px solid var(--color-rojo, #9B111E);
     padding: 15px 0;
-    max-width: 450px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .clasificacionFLC-img-frame {
-    max-width: 100%; /* Aprovecha todo el ancho del dispositivo móvil */
   }
 }
+
+@media screen and (max-width: 576px) {
+  .clasificacionFLC-section {
+    padding: 4rem 1rem; /* Menor padding para ganar espacio en pantalla chica */
+  }
+  
+  .clasificacionFLC-title {
+    font-size: 2.1rem; /* CLAVE 6: El título escala perfectamente en celulares pequeños */
+  }
+  
+  .clasificacionFLC-tabla-wrapper {
+    padding: 0.8rem; /* Más espacio útil para la tabla */
+  }
+}
+
+
+
+
+
+
+
+
+
 
 /* ===================================================
    RESPONSIVE DESIGN (S26 Ultra, iPhone Mini, Tablets)

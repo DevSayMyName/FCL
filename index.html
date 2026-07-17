@@ -580,35 +580,47 @@
 </section>
 
 
+<!-- Librería SheetJS para leer el Excel de Google en tiempo real -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
 <!-- ===================================================
-     COMPONENTE: TABLA DE CLASIFICACIÓN (clasificacionFLC)
+     COMPONENTE: CLASIFICACIÓN EN VIVO (clasificacionFLC)
      =================================================== -->
-<section class="clasificacionFLC-section revelar revelar-arriba" id="clasificacion">
+<section class="clasificacionFLC-section">
   <div class="clasificacionFLC-container">
     
     <!-- Bloque de Información (Izquierda) -->
     <div class="clasificacionFLC-info">
-      <span class="clasificacionFLC-tag">Clasificación General</span>
+      <span class="clasificacionFLC-tag">Clasificación en Vivo</span>
       <h2 class="clasificacionFLC-title">PUNTUACIONES S1 <br><span class="text-dorado">FN LEAGUE</span></h2>
-      
       <div class="clasificacionFLC-divider"></div>
       
-      <!-- Frase Motivacional Destacada -->
+      <!-- Frase Motivacional -->
       <blockquote class="clasificacionFLC-quote">
         <p>“El éxito es la suma de pequeños esfuerzos, repetidos día tras día”</p>
       </blockquote>
       
       <p class="clasificacionFLC-desc">
-        La constancia es el único camino hacia el trono. Cada punto acumulado durante las partidas de esta semana define el destino de los equipos en la tabla general. ¿Logrará tu escuadra mantenerse en la cima?
+        Nuestra tabla general se sincroniza en tiempo real con la base de datos oficial. Cada kill conseguida y cada top alcanzado te acercan más a la gloria semanal.
       </p>
     </div>
 
-    <!-- Bloque de Resultados / Foto (Derecha) -->
-    <div class="clasificacionFLC-media">
-      <div class="clasificacionFLC-img-frame">
-        <!-- Reemplaza con la ruta real de tu captura o imagen de puntuaciones -->
-        <img src="img/tabla-general-s1.png" alt="Tabla de Puntuaciones S1" class="clasificacionFLC-img">
-        <div class="clasificacionFLC-glow"></div>
+    <!-- Bloque de la Tabla de Google Sheets (Derecha) -->
+    <div class="clasificacionFLC-tabla-wrapper">
+      <div class="tabla-scroll-container">
+        <!-- El JS inyectará la tabla de posiciones aquí -->
+        <table class="tabla-flc" id="tabla-puntos-web">
+          <thead>
+            <tr>
+              <th style="text-align: center; padding: 30px; color: var(--color-dorado, #D4AF37);">
+                Sincronizando con Google Sheets...
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se auto-generarán las filas con los equipos -->
+          </tbody>
+        </table>
       </div>
     </div>
 

@@ -131,3 +131,78 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// ==========================================
+// SINCRONIZACIÓN DE DATOS CON GOOGLE SHEETS
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Tu enlace de Google Sheets formateado para descarga directa de datos
+  const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1vEbJm85_5iIOEcU26GtWt_cvi0gnfM52IzfTMPAqVtI/export?format=xlsx"; 
+
+  const tablaCuerpo = document.querySelector("#tabla-puntos-web tbody");
+  const tablaCabecera = document.querySelector("#tabla-puntos-web thead");
+
+  fetch(GOOGLE_SHEET_URL)
+    .then(response => {
+      if (!response.ok) throw new Error("No se pudo obtener la hoja de cálculo de Google.");
+      return response.arrayBuffer();
+    })
+    .then(buffer => {
+      const data = new Uint8Array(buffer);
+      const workbook = XLSX.read(data, { type: "array" });
+      
+      // Obtenemos la primera pestaña del Google Sheets
+      const nombreHoja = workbook.SheetNames[0];
+      const hoja = workbook.Sheets[nombreHoja];
+      
+      // Convertimos los datos de la hoja a formato JSON
+      const filas = XLSX.utils.sheet_to_json(hoja); 
+
+      if (filas.length === 0) {
+        throw new Error("El documento de Google Sheets no tiene datos.");
+      }
+
+      // 1. Generamos los nombres de las columnas (ej: POS, EQUIPO, LUNES...)
+      let cabeceraHTML = "<tr>";
+      const columnas = Object.keys(filas[0]);
+      columnas.forEach(col => {
+        cabeceraHTML += `<th>${col}</th>`;
+      });
+      cabeceraHTML += "</tr>";
+      tablaCabecera.innerHTML = cabeceraHTML;
+
+      // 2. Generamos las filas de puntuación de los equipos
+      let filasHTML = "";
+      filas.forEach((fila, index) => {
+        const esPrimero = index === 0; // Identificamos al puntero de la liga
+        
+        filasHTML += `<tr class="${esPrimero ? 'primer-lugar' : ''}">`;
+        
+        columnas.forEach(col => {
+          let valor = fila[col] !== undefined ? fila[col] : "0";
+          
+          // Agregamos la corona dorada al que esté de primer lugar
+          if (col === "POS" && esPrimero) {
+            valor = `👑 ${valor}`;
+          }
+          
+          filasHTML += `<td>${valor}</td>`;
+        });
+        
+        filasHTML += "</tr>";
+      });
+
+      tablaCuerpo.innerHTML = filasHTML;
+    })
+    .catch(error => {
+      console.error("Error al sincronizar con Google Sheets:", error);
+      tablaCabecera.innerHTML = "";
+      tablaCuerpo.innerHTML = `
+        <tr>
+          <td colspan="10" style="text-align: center; color: #9B111E; padding: 30px; font-weight: bold;">
+            ⚠️ Error de sincronización. Por favor, revisa que la hoja de cálculo de Google sea pública ("Cualquier persona con el enlace puede ver").
+          </td>
+        </tr>`;
+    });
+});
