@@ -104,3 +104,30 @@ document.addEventListener("DOMContentLoaded", () => {
     observador.observe(elemento);
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const botonesTab = document.querySelectorAll(".tab-btn");
+  const panelesDia = document.querySelectorAll(".dia-panel");
+
+  botonesTab.forEach(boton => {
+    boton.addEventListener("click", () => {
+      // 1. Quitar la clase activa de todos los botones
+      botonesTab.forEach(btn => btn.classList.remove("active"));
+      
+      // 2. Quitar la clase activa de todos los paneles de contenido
+      panelesDia.forEach(panel => panel.classList.remove("active"));
+
+      // 3. Añadir clase activa al botón presionado
+      boton.classList.add("active");
+
+      // 4. Buscar el panel que corresponde al atributo "data-dia" del botón
+      const diaSeleccionado = boton.getAttribute("data-dia");
+      const panelObjetivo = document.getElementById(`panel-${diaSeleccionado}`);
+
+      if (panelObjetivo) {
+        panelObjetivo.classList.add("active");
+      }
+    });
+  });
+});

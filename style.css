@@ -655,6 +655,331 @@ a:hover {
 
 
 
+/* ===================================================
+   COMPONENTE: REGLAMENTO Y PUNTUACIONES (reglamentoFLC)
+   =================================================== */
+
+.reglamentoFLC-section {
+  background-color: var(--color-negro, #121212);
+  padding: 6rem 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.reglamentoFLC-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* --- ENCABEZADO --- */
+.reglamentoFLC-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.reglamentoFLC-subtitle {
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  color: var(--color-dorado, #D4AF37);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.reglamentoFLC-title {
+  font-family: var(--fuente-titulos, 'Playfair Display', serif);
+  color: var(--color-blanco, #FFFFFF);
+  font-size: 3rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.reglamentoFLC-divider {
+  width: 80px;
+  height: 3px;
+  background-color: var(--color-rojo, #9B111E);
+  margin: 0 auto;
+}
+
+/* --- TABS (BOTONES DE NAVEGACIÓN) --- */
+.reglamentoFLC-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 4rem;
+  flex-wrap: wrap; /* Para móviles */
+}
+
+.tab-btn {
+  background-color: #1a1a1a;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  color: var(--color-blanco, #FFFFFF);
+  padding: 12px 24px;
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.tab-btn:hover {
+  border-color: var(--color-dorado, #D4AF37);
+  background-color: #222;
+}
+
+.tab-btn.active {
+  background-color: var(--color-dorado, #D4AF37);
+  color: var(--color-negro, #121212);
+  border-color: var(--color-dorado, #D4AF37);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+}
+
+/* --- PANELES DE CONTENIDO --- */
+.dia-panel {
+  display: none; /* Oculto por defecto */
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.dia-panel.active {
+  display: block; /* Se muestra el activo */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dia-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Mitad reglamento, mitad puntuaciones */
+  gap: 4rem;
+}
+
+.dia-seccion-title {
+  font-family: var(--fuente-titulos, 'Playfair Display', serif);
+  color: var(--color-blanco, #FFFFFF);
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--color-dorado, #D4AF37);
+  padding-left: 15px;
+}
+
+/* --- TARJETAS DE REGLAS (COL. IZQUIERDA) --- */
+.dia-reglas {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.regla-card {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  border-left: 5px solid;
+}
+
+/* Regla Permitida (Verde/Gris) */
+.regla-permitido {
+  border-left-color: #2ec4b6;
+}
+.regla-permitido .regla-icon {
+  background-color: rgba(46, 196, 182, 0.1);
+  color: #2ec4b6;
+}
+
+/* Regla Prohibida (Rojo Carmesí) */
+.regla-prohibido {
+  border-left-color: var(--color-rojo, #9B111E);
+}
+.regla-prohibido .regla-icon {
+  background-color: rgba(155, 17, 30, 0.15);
+  color: var(--color-rojo, #9B111E);
+}
+
+.regla-icon {
+  font-size: 1.2rem;
+  font-weight: 900;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.regla-info h4 {
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  color: var(--color-blanco, #FFFFFF);
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.regla-info p {
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.regla-info strong {
+  color: var(--color-rojo, #9B111E);
+}
+
+/* --- TARJETAS DE PUNTUACIÓN (COL. DERECHA) --- */
+.puntos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas de tarjetas en PC */
+  gap: 12px;
+}
+
+.punto-card {
+  background-color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 15px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.punto-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.puntos-top {
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+}
+
+.puntos-cantidad {
+  font-family: var(--fuente-titulos, 'Playfair Display', serif);
+  font-size: 1.3rem;
+  color: var(--color-blanco, #FFFFFF);
+  font-weight: 700;
+}
+
+/* Destacado Especial para el TOP 1 */
+.punto-card.top-oro {
+  border: 1px solid var(--color-dorado, #D4AF37);
+  background: linear-gradient(135deg, #1a1a1a 0%, rgba(212, 175, 55, 0.1) 100%);
+}
+.punto-card.top-oro .puntos-top {
+  color: var(--color-dorado, #D4AF37);
+}
+.punto-card.top-oro .puntos-cantidad {
+  color: var(--color-dorado, #D4AF37);
+  font-size: 1.5rem;
+}
+
+/* Destacado Especial para el TOP 2 */
+.punto-card.top-plata {
+  border: 1px solid #C0C0C0;
+  background: linear-gradient(135deg, #1a1a1a 0%, rgba(192, 192, 192, 0.1) 100%);
+}
+.punto-card.top-plata .puntos-top {
+  color: #C0C0C0;
+}
+.punto-card.top-plata .puntos-cantidad {
+  color: #C0C0C0;
+}
+
+/* --- VISTA DE ESPERA ("PRÓXIMAMENTE") --- */
+.reglamento-proximamente {
+  background-color: #1a1a1a;
+  border: 1px dashed rgba(212, 175, 55, 0.3);
+  padding: 5rem 2rem;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.reglamento-proximamente p {
+  font-family: var(--fuente-titulos, 'Playfair Display', serif);
+  color: var(--color-dorado, #D4AF37);
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+}
+
+/* ===================================================
+   RESPONSIVE DESIGN (S26 Ultra, iPhone Mini, Tablets)
+   =================================================== */
+
+@media screen and (max-width: 1024px) {
+  .dia-grid {
+    gap: 2rem;
+  }
+  .puntos-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .reglamentoFLC-title {
+    font-size: 2.2rem;
+  }
+
+  .dia-grid {
+    grid-template-columns: 1fr; /* Pasamos a una sola columna */
+    gap: 3rem;
+  }
+
+  .tab-btn {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .reglamentoFLC-section {
+    padding: 4rem 1rem;
+  }
+  
+  .reglamentoFLC-tabs {
+    gap: 5px; /* Más pegados los botones para que entren mejor */
+  }
+
+  .tab-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    flex-grow: 1; /* Los botones se adaptan para llenar el ancho */
+    text-align: center;
+  }
+
+  .puntos-grid {
+    grid-template-columns: repeat(2, 1fr); /* Se mantiene en 2 columnas muy limpias */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
