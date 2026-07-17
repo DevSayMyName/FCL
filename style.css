@@ -1,0 +1,897 @@
+/* =========================================
+   VARIABLES GLOBALES (Paleta y Fuentes)
+   ========================================= */
+:root {
+  /* Colores principales */
+  --color-blanco: #FFFFFF;
+  --color-negro: #121212;
+  --color-dorado: #D4AF37; 
+  --color-rojo: #9B111E; 
+  --fuente-titulos: 'Playfair Display', serif;
+  --fuente-textos: 'Lato', sans-serif;
+}
+/* =========================================
+   RESET BÁSICO (Para evitar márgenes raros)
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+
+}
+/* =========================================
+   ESTILOS BASE DEL DOCUMENTO
+   ========================================= */
+body {
+  font-family: var(--fuente-textos);
+  background-color: var(--color-blanco);
+  color: var(--color-negro);
+  line-height: 1.6; 
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  color: var(--color-negro);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+/* Estilo para los enlaces por defecto */
+a {
+  text-decoration: none;
+  color: var(--color-dorado);
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: var(--color-rojo);
+}
+/* ===================================================
+   ANIMACIONES DE SCROLL GLOBAL (Efectos de Revelado)
+   =================================================== */
+
+/* Estado base para todos los elementos que se van a animar */
+.revelar {
+  opacity: 0;
+  transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1); /* Curva suave y elegante */
+  will-change: transform, opacity;
+}
+
+/* Direcciones desde donde aparecerán */
+.revelar-arriba {
+  transform: translateY(50px); /* Viene desde abajo */
+}
+
+.revelar-izquierda {
+  transform: translateX(-50px); /* Viene desde la izquierda */
+}
+
+.revelar-derecha {
+  transform: translateX(50px); /* Viene desde la derecha */
+}
+
+/* Clase activa que inyectará JavaScript cuando el usuario haga scroll */
+.revelar.activo {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+/* =========================================
+   COMPONENTE: MENÚ DE NAVEGACIÓN (menuFLC)
+   ========================================= */
+
+.menuFLC-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--color-negro);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
+}
+
+.menuFLC {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo elegante */
+.menuFLC-logo a {
+  display: flex;
+  align-items: center; 
+  padding: 0;
+  border: none;
+}
+.menuFLC-logo-img {
+  max-height: 100px;   
+  width: auto; 
+  display: block;
+  padding:5px 0; 
+}
+
+.menuFLC-logo span {
+  color: var(--color-blanco); 
+}
+
+
+.menuFLC-links {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.menuFLC-links a {
+  color: var(--color-blanco);
+  font-family: var(--fuente-textos);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+
+.menuFLC-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--color-dorado);
+  transition: width 0.3s ease;
+}
+
+.menuFLC-links a:hover {
+  color: var(--color-dorado);
+}
+
+.menuFLC-links a:hover::after {
+  width: 100%;
+}
+
+.menuFLC-links .menuFLC-btn-contacto {
+  border: 1px solid var(--color-dorado);
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px; 
+  color: var(--color-dorado);
+  transition: all 0.3s ease;
+}
+
+.menuFLC-links .menuFLC-btn-contacto::after {
+  display: none; 
+}
+
+.menuFLC-links .menuFLC-btn-contacto:hover {
+  background-color: var(--color-dorado);
+  color: var(--color-negro); 
+}
+
+
+.menuFLC-hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  gap: 6px;
+  z-index: 1001; 
+}
+
+.menuFLC-hamburger .linea {
+  width: 28px;
+  height: 2px;
+  background-color: var(--color-dorado);
+  transition: all 0.3s ease;
+}
+/* ===================================================
+   COMPONENTE: HERO SECTION (heroFLC)
+   =================================================== */
+
+/* Contenedor exterior (Fondo oscuro premium) */
+.heroFLC {
+  background-color: var(--color-negro, #121212);
+  min-height: calc(100vh - 80px); /* Ocupa el alto restante de la pantalla */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  overflow: hidden;
+}
+
+/* Contenedor interno limitado para pantallas grandes (TVs/Ultrawide) */
+.heroFLC-container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Mitad imagen, mitad texto */
+  gap: 4rem;
+  align-items: center;
+}
+
+/* --- LADO IZQUIERDO: IMAGEN --- */
+.heroFLC-image-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heroFLC-img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  /* Sombra dorada muy sutil para dar profundidad en fondo oscuro */
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1); 
+  transition: transform 0.5s ease;
+}
+
+/* Efecto sutil interactivo en PC */
+.heroFLC-img:hover {
+  transform: scale(1.02);
+}
+
+/* --- LADO DERECHO: CONTENIDO --- */
+.heroFLC-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Subtítulo pequeño superior */
+.heroFLC-welcome {
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  color: var(--color-blanco, #FFFFFF);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 0.8rem;
+  font-weight: 400;
+}
+
+/* Título Principal */
+.heroFLC-title {
+  font-family: var(--fuente-titulos, 'Playfair Display', serif);
+  color: var(--color-dorado, #D4AF37);
+  font-size: 3.8rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1.8rem;
+  letter-spacing: 1px;
+}
+
+/* Caja de la Máquina de Escribir */
+.heroFLC-typewriter-box {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Evita desbordamiento en pantallas pequeñas */
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Palabra "SOMOS:" */
+.heroFLC-label {
+  color: var(--color-blanco, #FFFFFF);
+  margin-right: 15px;
+}
+
+/* El texto dinámico que cambia */
+.heroFLC-dynamic-text {
+  color: var(--color-rojo, #9B111E); /* Rojo carmesí de acento */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* El cursor parpadeante */
+.heroFLC-cursor {
+  color: var(--color-rojo, #9B111E);
+  margin-left: 5px;
+  animation: parpadeoCursor 0.8s infinite;
+}
+
+/* Animación del cursor */
+@keyframes parpadeoCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ===================================================
+   COMPONENTE: NOSOTROS (nosotrosFLC)
+   =================================================== */
+
+/* Contenedor exterior (Se acopla al fondo oscuro premium) */
+.nosotrosFLC {
+  background-color: var(--color-negro, #121212);
+  color: var(--color-blanco, #FFFFFF);
+  padding: 6rem 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor interno centrado */
+.nosotrosFLC-container {
+  max-width: 1200px; /* Un ancho ligeramente más estrecho para facilitar la lectura */
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem; /* Espaciado generoso entre el bloque de arriba y la frase */
+}
+
+/* Grid superior de dos columnas (Texto izquierda, Logo derecha) */
+.nosotrosFLC-main-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr; /* El texto ocupa un poco más de espacio */
+  gap: 4rem;
+  align-items: center;
+}
+
+/* --- LADO IZQUIERDO: TEXTOS --- */
+.nosotrosFLC-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.nosotrosFLC-subtitle {
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  color: var(--color-dorado, #D4AF37);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.nosotrosFLC-title {
+  font-family: var(--fuente-titulos, 'Playfair Display', serif);
+  color: var(--color-blanco, #FFFFFF);
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+/* Divisor elegante color rojo de acento */
+.nosotrosFLC-divider {
+  width: 60px;
+  height: 3px;
+  background-color: var(--color-rojo, #9B111E);
+  margin-bottom: 2rem;
+}
+
+.nosotrosFLC-description {
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  color: rgba(255, 255, 255, 0.85); /* Un tono blanco suavizado para no cansar la vista */
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.nosotrosFLC-description strong {
+  color: var(--color-dorado, #D4AF37);
+  font-weight: 700;
+}
+
+/* --- LADO DERECHO: LOGO --- */
+.nosotrosFLC-logo-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nosotrosFLC-logo-img {
+  max-width: 100%;
+  max-height: 300px; /* Evita que el logo sea excesivamente grande */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  /* Sombra dorada muy difuminada para que parezca que el logo brilla sutilmente */
+  filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.15));
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* Efecto interactivo al pasar el cursor */
+.nosotrosFLC-logo-img:hover {
+  transform: scale(1.03);
+  filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.3));
+}
+
+/* --- FILA INFERIOR: LA FRASE --- */
+.nosotrosFLC-quote-box {
+  width: 100%;
+  /* Líneas finas doradas arriba y abajo para aislar la frase con elegancia */
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nosotrosFLC-quote {
+  font-family: var(--fuente-titulos, 'Playfair Display', serif);
+  font-size: 1.8rem;
+  font-style: italic;
+  color: var(--color-dorado, #D4AF37);
+  max-width: 900px;
+  line-height: 1.6;
+}
+
+
+/* ===================================================
+   COMPONENTE: SECCIÓN JORNADAS (jornadasFLC)
+   =================================================== */
+
+.jornadasFLC-section {
+  background-color: var(--color-negro, #121212);
+  padding: 5rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Contenedor Grid Principal */
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 120px); /* Controla el alto de las filas uniformemente */
+  gap: 15px; /* Separación elegante */
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* =========================================
+   ASIGNACIÓN DE CASILLAS (Tu Estructura Optimizada)
+   ========================================= */
+
+.div1 { grid-column: 2 / span 3; grid-row: 1; } /* Título */
+.div8 { grid-column: 1; grid-row: 1; }          /* Logo Top Izq */
+.div9 { grid-column: 5; grid-row: 1; }          /* Logo Top Der */
+
+/* Días de la semana */
+.div2 { grid-column: 1; grid-row: 2 / span 2; } 
+.div3 { grid-column: 2; grid-row: 2 / span 2; }
+.div4 { grid-column: 3; grid-row: 2 / span 2; }
+.div5 { grid-column: 4; grid-row: 2 / span 2; }
+.div6 { grid-column: 5; grid-row: 2 / span 2; }
+
+.div7 { grid-column: 2 / span 3; grid-row: 4 / span 2; } /* Banner Ganador */
+.div10 { grid-column: 1; grid-row: 4 / span 2; }         /* Logo Bottom Izq */
+.div11 { grid-column: 5; grid-row: 4 / span 2; }         /* Logo Bottom Der */
+
+
+/* =========================================
+   DISEÑO Y ESTILOS DE LOS ELEMENTOS
+   ========================================= */
+
+/* --- TÍTULO (div1) --- */
+.jornadasFLC-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.jornadasFLC-title h2 {
+  font-family: var(--fuente-titulos, 'Playfair Display', serif);
+  color: var(--color-dorado, #D4AF37);
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* --- TARJETAS DE LOS DÍAS (div2 a div6) --- */
+.jornadasFLC-day {
+  background-color: #1a1a1a;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.jornadasFLC-day span {
+  font-family: var(--fuente-textos, 'Lato', sans-serif);
+  color: var(--color-blanco, #FFFFFF);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 1.5px;
+}
+
+/* Efecto hover interactivo en los días */
+.jornadasFLC-day:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-dorado, #D4AF37);
+  background: linear-gradient(135deg, #1a1a1a 0%, var(--color-rojo, #9B111E) 100%);
+  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
+}
+
+/* --- CONTROL DE IMÁGENES (Logos) --- */
+.jornadasFLC-logo-top, 
+.jornadasFLC-logo-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.jornadasFLC-logo-top img, 
+.jornadasFLC-logo-bottom img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Evita que el logo se deforme o recorte */
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.5));
+  transition: transform 0.3s ease;
+}
+
+.jornadasFLC-logo-top:hover img, 
+.jornadasFLC-logo-bottom:hover img {
+  transform: scale(1.08);
+}
+
+/* --- CUADRO DE GANADOR (div7) --- */
+.jornadasFLC-winner {
+  position: relative;
+  border: 2px solid var(--color-dorado, #D4AF37);
+  border-radius: 10px;
+  overflow: hidden; /* Corta la imagen para que respete las esquinas redondeadas */
+  background-color: #151515;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+.jornadasFLC-winner .winner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Hace que la foto ganadora llene todo el espacio sin deformarse */
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+/* Texto superpuesto elegante en la foto */
+.winner-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(18, 18, 18, 0.9) 0%, rgba(18, 18, 18, 0) 100%);
+  padding: 15px;
+  text-align: center;
+}
+
+.winner-overlay span {
+  font-family: var(--fuente-titulos, 'Playfair Display', serif);
+  color: var(--color-dorado, #D4AF37);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.jornadasFLC-winner:hover .winner-img {
+  transform: scale(1.04); /* Zoom suave */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   RESPONSIVE MENUFLC: Móviles y Tablets (Hasta 768px)
+   Esto cubre desde un iPad hasta un iPhone Mini
+   ========================================= */
+@media screen and (max-width: 768px) {
+  .menuFLC {
+    padding: 1rem 1.5rem; 
+  }
+
+  .menuFLC-hamburger {
+    display: flex; 
+  }
+
+  .menuFLC-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh; 
+    background-color: rgba(18, 18, 18, 0.98); 
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
+    transition: right 0.4s ease-in-out; 
+  }
+
+ 
+  .menuFLC-links.activo {
+    right: 0; 
+  }
+
+  .menuFLC-links a {
+    font-size: 1.5rem; 
+  }
+  .menuFLC-hamburger.activo .linea:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    background-color: var(--color-blanco);
+  }
+  .menuFLC-hamburger.activo .linea:nth-child(2) {
+    opacity: 0; 
+  }
+  .menuFLC-hamburger.activo .linea:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: var(--color-blanco);
+  }
+}
+@media screen and (max-width: 768px) {
+  .menuFLC-logo-img {
+    max-height: 80px; 
+  }
+}
+
+
+/* ===================================================
+   RESPONSIVE DESIGN heroFLC(S26 Ultra, iPhone Mini, Tablets, TVs)
+   =================================================== */
+
+/* Pantallas Medianas (Laptops y Tablets grandes) */
+@media screen and (max-width: 1024px) {
+  .heroFLC-title {
+    font-size: 3rem;
+  }
+  .heroFLC-typewriter-box {
+    font-size: 1.8rem;
+  }
+  .heroFLC-container {
+    gap: 2rem;
+  }
+}
+
+/* Tablets de todo tipo (Hasta 768px) */
+@media screen and (max-width: 768px) {
+  .heroFLC {
+    padding: 4rem 1.5rem;
+  }
+  
+  .heroFLC-container {
+    grid-template-columns: 1fr; /* Colocamos uno sobre otro */
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .heroFLC-image-wrapper {
+    order: 1; /* Forzamos a que la imagen esté arriba */
+  }
+
+  .heroFLC-content-wrapper {
+    order: 2; /* Texto abajo */
+    align-items: center;
+  }
+
+  .heroFLC-typewriter-box {
+    justify-content: center;
+  }
+}
+
+/* Móviles y dispositivos pequeños (iPhone Mini, S26 Ultra y similares - hasta 480px) */
+@media screen and (max-width: 480px) {
+  .heroFLC {
+    padding: 2.5rem 1rem;
+  }
+
+  .heroFLC-welcome {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+
+  .heroFLC-title {
+    font-size: 2.2rem; /* Tamaño idóneo para pantallas pequeñas sin desbordamiento */
+    margin-bottom: 1.2rem;
+  }
+
+  .heroFLC-typewriter-box {
+    font-size: 1.4rem;
+  }
+
+  .heroFLC-img {
+    max-width: 85%; /* Achicamos ligeramente la imagen para no saturar la pantalla táctil */
+  }
+}
+
+
+/* ===================================================
+   RESPONSIVE DESIGN NOSOTROS (S26 Ultra, iPhone Mini, Tablets, TVs)
+   =================================================== */
+
+/* Ajuste para Laptops y Tablets Grandes */
+@media screen and (max-width: 1024px) {
+  .nosotrosFLC-title {
+    font-size: 2.5rem;
+  }
+  .nosotrosFLC-main-grid {
+    gap: 3rem;
+  }
+  .nosotrosFLC-quote {
+    font-size: 1.6rem;
+  }
+}
+
+/* Ajuste para Tablets (Hasta 768px) */
+@media screen and (max-width: 768px) {
+  .nosotrosFLC {
+    padding: 4rem 1.5rem;
+  }
+  
+  .nosotrosFLC-container {
+    gap: 3.5rem;
+  }
+
+  .nosotrosFLC-main-grid {
+    grid-template-columns: 1fr; /* Cambia a una sola columna */
+    gap: 3rem;
+  }
+
+  .nosotrosFLC-content {
+    text-align: center;
+    align-items: center;
+  }
+
+  .nosotrosFLC-logo-img {
+    max-height: 240px; /* Achicamos ligeramente el logo */
+  }
+
+  .nosotrosFLC-quote {
+    font-size: 1.4rem;
+  }
+}
+
+/* Ajuste para móviles compactos y modernos (iPhone Mini y S26 Ultra - hasta 480px) */
+@media screen and (max-width: 480px) {
+  .nosotrosFLC {
+    padding: 3rem 1rem;
+  }
+
+  .nosotrosFLC-container {
+    gap: 2.5rem;
+  }
+
+  .nosotrosFLC-title {
+    font-size: 2rem;
+  }
+
+  .nosotrosFLC-description {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .nosotrosFLC-logo-img {
+    max-height: 180px; /* Reducción óptima para pantallas de móviles verticales */
+  }
+
+  .nosotrosFLC-quote-box {
+    padding: 2rem 0.5rem;
+  }
+
+  .nosotrosFLC-quote {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+}
+
+
+/* ===================================================
+   RESPONSIVE DESIGN jornadasFLC (S26 Ultra, iPhone Mini, Tablets)
+   =================================================== */
+
+/* Tablets (Hasta 992px) - Ajustes del tamaño de rejilla */
+@media screen and (max-width: 992px) {
+  .parent {
+    grid-template-rows: repeat(5, 90px); /* Reducimos la altura de las filas */
+    gap: 10px;
+  }
+  .jornadasFLC-title h2 {
+    font-size: 1.6rem;
+  }
+  .jornadasFLC-day span {
+    font-size: 0.9rem;
+  }
+}
+
+/* Móviles (Hasta 768px) - Reorganización total de la estructura */
+@media screen and (max-width: 768px) {
+  .jornadasFLC-section {
+    padding: 3rem 1rem;
+  }
+
+  .parent {
+    display: flex;
+    flex-direction: column; /* Cambiamos de Grid a Flex vertical */
+    gap: 20px;
+  }
+
+  /* Forzamos a que todos ocupen el 100% de ancho y su propia altura */
+  .parent > div {
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto;
+  }
+
+  /* --- Re-acomodación de Logos Superiores --- */
+  .div8, .div9 {
+    display: inline-flex;
+    width: 48% !important; /* Los ponemos uno al lado del otro */
+    justify-content: center;
+  }
+  
+  /* Envolvemos la sección del título */
+  .jornadasFLC-title {
+    order: -2; /* Forzamos título arriba del todo */
+  }
+
+  /* Los días se vuelven una lista vertical compacta */
+  .jornadasFLC-day {
+    padding: 15px;
+  }
+
+  /* Cuadro del Ganador */
+  .jornadasFLC-winner {
+    height: 220px !important; /* Le damos una altura fija bonita en celular */
+    order: 3;
+  }
+
+  /* Logos inferiores se ponen juntos al final */
+  .div10, .div11 {
+    display: inline-flex;
+    width: 45% !important;
+    justify-content: center;
+    margin: 0 auto;
+    order: 4;
+  }
+}
+

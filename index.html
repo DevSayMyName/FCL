@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>FN LEAGUE</title>
+    <link rel="icon" type="image/png" href="img/icono.PNG">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts: Playfair Display (Títulos) y Lato (Textos) -->
+     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- menu FLC -->
+    <header class="menuFLC-header">
+  <nav class="menuFLC">
+    <!-- Logo -->
+    <div class="menuFLC-logo">
+      <a href="#inicio">
+        <img src="img/icono.PNG" alt="Logo de MiMarca" class="menuFLC-logo-img">
+      </a>
+    </div>
+    <button class="menuFLC-hamburger" aria-label="Abrir menú">
+      <span class="linea"></span>
+      <span class="linea"></span>
+      <span class="linea"></span>
+    </button>
+
+    <!-- Enlaces -->
+    <ul class="menuFLC-links">
+      <li><a href="#heroFLC">Inicio</a></li>
+      <li><a href="#nosotrosFLC">Nosotros</a></li>
+      <li><a href="#jornadasFLC">Jornadas</a></li>
+      <li><a href="https://www.instagram.com/fn_esports_oficial?igsh=eG04a2kyYWY1bXN0" target="_blank" class="menuFLC-btn-contacto">FN</a></li>
+    </ul>
+  </nav>
+</header>
+ <!-- ===================================================
+     COMPONENTE: HERO SECTION (heroFLC)
+     =================================================== -->
+<section id="heroFLC" class="heroFLC revelar revelar-arriba">
+  <div class="heroFLC-container">
+    
+    <div class="heroFLC-image-wrapper">
+      <img src="img/logoFLC.PNG" alt="FN League Community Banner" class="heroFLC-img">
+    </div>
+
+    <div class="heroFLC-content-wrapper">
+      <span class="heroFLC-welcome">Bienvenidos a</span>
+      <h1 class="heroFLC-title">FN LEAGUE COMMUNITY</h1>
+      
+      <div class="heroFLC-typewriter-box">
+        <span class="heroFLC-label">SOMOS:</span>
+        <span class="heroFLC-dynamic-text" id="heroFLC-typewriter"></span>
+        <span class="heroFLC-cursor">|</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+ <!-- ===================================================
+     COMPONENTE: NOSOTROS (nosotrosFLC)
+     =================================================== -->
+<section id="nosotrosFLC" class="nosotrosFLC revelar revelar-izquierda">
+  <div class="nosotrosFLC-container">
+    
+    <div class="nosotrosFLC-main-grid">
+      
+      <div class="nosotrosFLC-content">
+        <span class="nosotrosFLC-subtitle">Nuestra Esencia</span>
+        <h2 class="nosotrosFLC-title">QUIENES SOMOS</h2>
+        <div class="nosotrosFLC-divider"></div>
+        
+        <p class="nosotrosFLC-description">
+          En <strong>FN League Community</strong>, nos dedicamos a construir un ecosistema donde la pasión por el gaming y la alta competencia se fusionan. Nacimos con el firme propósito de crear un espacio donde cada jugador encuentre un entorno ideal para destacar, superarse y competir al más alto nivel.
+        </p>
+        <p class="nosotrosFLC-description">
+          Nuestra trayectoria está marcada por la búsqueda constante de la excelencia, organizando torneos y dinámicas que no solo ponen a prueba la habilidad, sino que también fomentan valores como el respeto, la disciplina y el trabajo en equipo.
+        </p>
+      </div>
+
+      <div class="nosotrosFLC-logo-area">
+        <img src="img/fnLogo.jpeg" alt="Logo FN League" class="nosotrosFLC-logo-img">
+      </div>
+
+    </div>
+
+    <div class="nosotrosFLC-quote-box">
+      <p class="nosotrosFLC-quote">
+        "EL DESEO DE TRIUNFAR DEBE SER MÁS GRANDE QUE EL MIEDO AL FRACASO"
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===================================================
+     COMPONENTE: JORNADAS FN LEAGUE (jornadasFLC)
+     =================================================== -->
+<section class="jornadasFLC-section">
+  <div class="parent revelar revelar-arriba">
+    
+    <!-- Título Principal (div1) -->
+    <div class="div1 jornadasFLC-title">
+      <h2>JORNADAS FN LEAGUE</h2>
+    </div>
+
+    <!-- Logos Superiores (div8 y div9) -->
+    <div class="div8 jornadasFLC-logo-top">
+      <img src="img/somosFN.PNG" alt="Somos FN">
+    </div>
+    <div class="div9 jornadasFLC-logo-top">
+      <img src="img/somosFN.PNG" alt="Somos FN">
+    </div>
+
+    <!-- Tarjetas de los Días (div2 a div6) -->
+    <div class="div2 jornadasFLC-day">
+     
+        <a href="lunes.html"> <span>LUNES</span></a>
+    </div>
+    <div class="div3 jornadasFLC-day">
+      <span>MARTES</span>
+    </div>
+    <div class="div4 jornadasFLC-day">
+      <span>MIÉRCOLES</span>
+    </div>
+    <div class="div5 jornadasFLC-day">
+      <span>JUEVES</span>
+    </div>
+    <div class="div6 jornadasFLC-day">
+      <span>VIERNES</span>
+    </div>
+
+    <!-- Banner Ganador del Día (div7) -->
+    <div class="div7 jornadasFLC-winner">
+      <!-- Si la imagen está vacía, se mostrará un elegante texto temporal -->
+      <img src="img/ganador-placeholder.png" alt="Equipo ganador de jornada" class="winner-img">
+      <div class="winner-overlay">
+        <span>GANADOR DE LA JORNADA</span>
+      </div>
+    </div>
+
+    <!-- Logos Inferiores (div10 y div11) -->
+    <div class="div10 jornadasFLC-logo-bottom">
+      <img src="img/fnLogo.jpeg" alt="FN Logo">
+    </div>
+    <div class="div11 jornadasFLC-logo-bottom">
+      <img src="img/logoFLC.PNG" alt="Logo FLC">
+    </div>
+
+  </div>
+</section>
+    
+<script src="script.js"></script>
+</body>
+</html>
