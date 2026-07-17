@@ -506,13 +506,64 @@ a:hover {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+
+.jornadasFLC-day a {
+  display: flex;
+  flex-direction: column; /* Apila los elementos verticalmente */
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 10px; /* Espacio exacto entre la imagen y el texto "LUNES" */
+  text-decoration: none;
+}
+
+/* Controlamos el tamaño de la foto del jugador para que no rompa la celda */
+.jornadasFLC-day-img {
+  max-height: 200px; /* Altura ideal para que quepa bien junto al texto */
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease; /* Transición suave para el zoom */
+}
+
+/* Estilo del texto del día */
 .jornadasFLC-day span {
   font-family: var(--fuente-textos, 'Lato', sans-serif);
   color: var(--color-blanco, #FFFFFF);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 0.9rem; /* Un poco más pequeño para dar balance visual */
   letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
 }
+
+/* ===================================================
+   EFECTOS HOVER (Al pasar el mouse)
+   =================================================== */
+
+/* Zoom sutil solo a la imagen del jugador cuando pasas el mouse por el botón */
+.jornadasFLC-day:hover .jornadasFLC-day-img {
+  transform: scale(1.1);
+}
+
+/* Cambia el texto a dorado al hacer hover en el botón */
+.jornadasFLC-day:hover span {
+  color: var(--color-dorado, #D4AF37);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Efecto hover interactivo en los días */
 .jornadasFLC-day:hover {
