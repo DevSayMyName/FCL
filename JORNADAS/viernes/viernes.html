@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="viernes.css">
+    <title>JORNADA VIERNES</title>
+    <link rel="icon" type="image/png" href="../../../img/icono.PNG">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts: Playfair Display (Títulos) y Lato (Textos) -->
+     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+      <!-- menu FLC -->
+    <header class="menuFLC-header">
+  <nav class="menuFLC">
+    <!-- Logo -->
+    <div class="menuFLC-logo">
+      <a href="https://fn-league.vercel.app/index.html">
+        <img src="../../img/icono.PNG" alt="Logo de MiMarca" class="menuFLC-logo-img">
+      </a>
+    </div>
+    <button class="menuFLC-hamburger" aria-label="Abrir menú">
+      <span class="linea"></span>
+      <span class="linea"></span>
+      <span class="linea"></span>
+    </button>
+
+    <!-- Enlaces -->
+    <ul class="menuFLC-links">
+      <li><a href="lunes.html">Inicio</a></li>
+      <li><a href="../../index.html">Regresar</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Librería para leer Google Sheets -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<section class="visor-capturas-section">
+  <div class="visor-capturas-container">
+    
+    <!-- Encabezado -->
+    <div class="visor-header">
+      <span class="visor-tag">Comprobantes Oficiales</span>
+      <h2 class="visor-titulo">RESULTADOS DEL <span class="text-dorado">VIERNES</span></h2>
+      <div class="visor-divider"></div>
+    </div>
+
+    <!-- 1. Selector de Semanas -->
+    <div class="selector-semanas" id="contenedor-semanas"></div>
+
+    <!-- 2. Selector de Salas -->
+    <div class="botones-salas" id="contenedor-salas">
+      <button class="btn-sala loading">Cargando salas...</button>
+    </div>
+
+    <!-- 3. Visor de Imagenes (Contenedor Multimapa) -->
+    <div class="contenedor-foto-main">
+      <div id="contenedor-fotos-grid" class="fotos-grid"></div>
+      <p id="mensaje-estado" class="mensaje-estado" style="display: none;"></p>
+    </div>
+
+  </div>
+</section>
+
+<script src="../../script.js"></script>
+<script src="viernes.js"></script>
+</body>
+</html>

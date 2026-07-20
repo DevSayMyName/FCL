@@ -1,0 +1,143 @@
+/* ===================================================
+   VISOR MULTI-IMAGEN (lunes.css)
+   =================================================== */
+
+.visor-capturas-section {
+  background-color: var(--color-negro, #121212);
+  padding: 3.5rem 1.2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.visor-capturas-container {
+  max-width: 950px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- ENCABEZADO --- */
+.visor-header { margin-bottom: 1.8rem; }
+.visor-tag {
+  color: var(--color-rojo, #9B111E);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.visor-titulo {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0 0 0.8rem 0;
+}
+.text-dorado { color: var(--color-dorado, #D4AF37); }
+.visor-divider {
+  width: 50px;
+  height: 3px;
+  background-color: var(--color-dorado, #D4AF37);
+  margin: 0 auto;
+}
+
+/* --- BOTONES DE SEMANA Y SALA --- */
+.selector-semanas {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.btn-semana {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-semana.active, .btn-semana:hover {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--color-dorado, #D4AF37);
+  border-color: var(--color-dorado, #D4AF37);
+}
+
+.botones-salas {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.btn-sala {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-sala.active, .btn-sala:hover {
+  background-color: var(--color-dorado, #D4AF37);
+  color: #121212;
+  border-color: var(--color-dorado, #D4AF37);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+}
+
+/* --- CONTENEDOR MULTI-IMAGEN --- */
+.contenedor-foto-main {
+  width: 100%;
+  max-width: 900px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* Grilla apilada verticalmente */
+.fotos-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Separación entre la foto 1 y la foto 2 */
+  width: 100%;
+  align-items: center;
+}
+
+/* Estilo individual para cada foto cargada */
+.img-responsive-flc {
+  width: 100%;
+  max-width: 850px;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  display: block;
+}
+
+.mensaje-estado {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  padding: 2rem 1rem;
+  margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .contenedor-foto-main { padding: 8px; }
+  .fotos-grid { gap: 12px; }
+  .img-responsive-flc { max-height: 450px; }
+  .btn-sala { padding: 8px 16px; font-size: 0.85rem; }
+}
