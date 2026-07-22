@@ -1,14 +1,27 @@
 /* ===================================================
-   VISOR MULTI-IMAGEN (lunes.css)
+   1. FONDO GENERAL Y BASE DE LA PANTALLA
    =================================================== */
+html, body {
+  background-color: var(--bg-principal) !important;
+  color: var(--texto-principal);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
+/* ===================================================
+   2. VISOR MULTI-IMAGEN
+   =================================================== */
 .visor-capturas-section {
-  background-color: var(--color-negro, #121212);
+  background-color: var(--bg-principal);
+  min-height: calc(100vh - 100px); /* Asegura cubrir el 100% del alto de la ventana */
   padding: 3.5rem 1.2rem;
   width: 100%;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
+  transition: background-color 0.3s ease;
 }
 
 .visor-capturas-container {
@@ -21,9 +34,12 @@
 }
 
 /* --- ENCABEZADO --- */
-.visor-header { margin-bottom: 1.8rem; }
+.visor-header { 
+  margin-bottom: 1.8rem; 
+}
+
 .visor-tag {
-  color: var(--color-rojo, #9B111E);
+  color: var(--color-rojo);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 2.5px;
@@ -31,17 +47,23 @@
   display: block;
   margin-bottom: 0.4rem;
 }
+
 .visor-titulo {
-  color: #ffffff;
+  color: var(--texto-principal);
   font-size: 2.2rem;
   font-weight: 700;
   margin: 0 0 0.8rem 0;
+  transition: color 0.3s ease;
 }
-.text-dorado { color: var(--color-dorado, #D4AF37); }
+
+.text-dorado { 
+  color: var(--color-dorado); 
+}
+
 .visor-divider {
   width: 50px;
   height: 3px;
-  background-color: var(--color-dorado, #D4AF37);
+  background-color: var(--color-dorado);
   margin: 0 auto;
 }
 
@@ -53,10 +75,11 @@
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
+
 .btn-semana {
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--bg-tarjeta);
+  color: var(--texto-secundario);
+  border: 1px solid var(--borde-tarjeta);
   padding: 6px 16px;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -64,10 +87,12 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.btn-semana.active, .btn-semana:hover {
+
+.btn-semana.active, 
+.btn-semana:hover {
   background: rgba(212, 175, 55, 0.15);
-  color: var(--color-dorado, #D4AF37);
-  border-color: var(--color-dorado, #D4AF37);
+  color: var(--color-dorado);
+  border-color: var(--color-dorado);
 }
 
 .botones-salas {
@@ -77,10 +102,11 @@
   flex-wrap: wrap;
   margin-bottom: 2rem;
 }
+
 .btn-sala {
-  background-color: #1a1a1a;
-  color: #ffffff;
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background-color: var(--bg-tarjeta);
+  color: var(--texto-principal);
+  border: 1px solid var(--borde-tarjeta);
   padding: 10px 22px;
   border-radius: 6px;
   font-size: 0.95rem;
@@ -88,10 +114,12 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.btn-sala.active, .btn-sala:hover {
-  background-color: var(--color-dorado, #D4AF37);
-  color: #121212;
-  border-color: var(--color-dorado, #D4AF37);
+
+.btn-sala.active, 
+.btn-sala:hover {
+  background-color: var(--color-dorado);
+  color: var(--color-negro);
+  border-color: var(--color-dorado);
   box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
 }
 
@@ -99,19 +127,20 @@
 .contenedor-foto-main {
   width: 100%;
   max-width: 900px;
-  background-color: #1a1a1a;
+  background-color: var(--bg-tarjeta);
   border-radius: 12px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--borde-tarjeta);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   padding: 15px;
   box-sizing: border-box;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Grilla apilada verticalmente */
 .fotos-grid {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Separación entre la foto 1 y la foto 2 */
+  gap: 20px;
   width: 100%;
   align-items: center;
 }
@@ -124,17 +153,19 @@
   max-height: 600px;
   object-fit: contain;
   border-radius: 8px;
-  border: 1px solid rgba(212, 175, 55, 0.2);
+  border: 1px solid var(--borde-tarjeta);
   display: block;
 }
 
 .mensaje-estado {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--texto-secundario);
   font-size: 0.95rem;
   padding: 2rem 1rem;
   margin: 0;
+  transition: color 0.3s ease;
 }
 
+/* --- RESPONSIVE MOBILE --- */
 @media screen and (max-width: 600px) {
   .contenedor-foto-main { padding: 8px; }
   .fotos-grid { gap: 12px; }
