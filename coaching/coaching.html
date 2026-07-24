@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Analizador de Mapas y Spots</title>
+  <style>
+  * { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+  -webkit-tap-highlight-color: transparent; 
+}
+
+body { 
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+  display: flex; 
+  height: 100vh; 
+  width: 100vw;
+  background-color: #0e0e0e; 
+  color: #ffffff; 
+  overflow: hidden; 
+}
+
+/* =========================================
+   1. CONTROLES Y NAVEGACIÓN MÓVIL
+   ========================================= */
+
+/* Botón flotante para móviles */
+#mobileToggle {
+  display: none;
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 100;
+  background: #D4AF37;
+  color: #121212;
+  border: 1px solid #D4AF37;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-height: 44px;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#mobileToggle:active { 
+  background: #b59226; 
+  transform: scale(0.96);
+}
+
+/* Overlay para cerrar el menú */
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 90;
+  backdrop-filter: blur(4px);
+}
+
+/* =========================================
+   2. PANEL LATERAL (SIDEBAR FLC)
+   ========================================= */
+#sidebar { 
+  width: 320px; 
+  background: #181818; 
+  padding: 18px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 14px; 
+  border-right: 1px solid rgba(212, 175, 55, 0.25); 
+  z-index: 100; 
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#btnCloseSidebar {
+  display: none;
+  background: #9B111E;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-height: 38px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#btnCloseSidebar:active {
+  background: #780d17;
+}
+
+/* =========================================
+   3. FORMULARIOS Y HERRAMIENTAS
+   ========================================= */
+select, input, button { 
+  padding: 10px 12px; 
+  border-radius: 6px; 
+  border: 1px solid rgba(212, 175, 55, 0.2); 
+  background: #242424; 
+  color: #ffffff; 
+  font-size: 13px;
+  font-family: inherit;
+  min-height: 44px;
+  transition: all 0.2s ease;
+}
+
+select:focus, input:focus {
+  outline: none;
+  border-color: #D4AF37;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.25);
+}
+
+input[type="color"] { 
+  padding: 3px; 
+  width: 44px; 
+  height: 44px; 
+  cursor: pointer; 
+  border-radius: 6px;
+  background: #242424;
+}
+
+input[type="range"] { 
+  height: 44px; 
+  flex: 1; 
+  accent-color: #D4AF37;
+}
+
+button { 
+  cursor: pointer; 
+  font-weight: 700; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease; 
+}
+
+button:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  background: #2c2c2c;
+}
+
+button:active { 
+  background: #1a1a1a; 
+}
+
+button.active { 
+  background: #D4AF37; 
+  color: #121212; 
+  border-color: #D4AF37; 
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+}
+
+.toolbar { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); 
+  gap: 8px; 
+}
+
+.toolbar-group { 
+  display: flex; 
+  gap: 8px; 
+  align-items: center; 
+  grid-column: span 2; 
+}
+
+/* =========================================
+   4. LISTA DE SPOTS
+   ========================================= */
+#spotsContainer { 
+  flex: 1; 
+  overflow-y: auto; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; 
+  padding-right: 4px;
+}
+
+.btn-spot { 
+  width: 100%; 
+  text-align: left; 
+  padding: 12px 14px; 
+  background: #202020; 
+  font-size: 13px; 
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 4px solid #D4AF37;
+  border-radius: 4px;
+  color: #e0e0e0;
+  text-transform: none;
+}
+
+.btn-spot:hover, .btn-spot:active { 
+  background: #2a2a2a; 
+  color: #ffffff;
+  border-left-color: #ffffff;
+  transform: translateX(3px);
+}
+
+/* =========================================
+   5. ÁREA DEL MAPA Y CANVAS
+   ========================================= */
+#viewport { 
+  flex: 1; 
+  position: relative; 
+  overflow: hidden; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  background: #080808; 
+  width: 100%;
+  height: 100%;
+}
+
+#canvasWrapper { 
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
+  transform-origin: center center; 
+  transition: transform 0.1s ease-out; 
+}
+
+canvas { 
+  display: block;
+  max-width: 100vw;
+  max-height: 100vh;
+  object-fit: contain;
+  touch-action: none;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+#bgCanvas { position: absolute; top: 0; left: 0; z-index: 1; }
+#drawCanvas { position: relative; z-index: 2; cursor: crosshair; }
+
+/* =========================================
+   6. ELEMENTOS DE TEXTO ARRASTRABLES (FLC STYLE)
+   ========================================= */
+.draggable-text {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: move;
+  user-select: none;
+  touch-action: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  padding: 5px 10px;
+  border: 1px dashed transparent;
+  border-radius: 6px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.draggable-text:hover, 
+.draggable-text.selected {
+  border-color: #D4AF37; /* Borde punteado Dorado FLC */
+  background: rgba(18, 18, 18, 0.75);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+.text-content {
+  font-weight: 700;
+  text-shadow: 0 0 6px #000, 0 0 6px #000, 0 0 6px #000;
+  line-height: 1;
+}
+
+.btn-delete-text {
+  display: none;
+  background: #9B111E; /* Rojo FLC */
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  min-height: unset;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-delete-text:hover {
+  background: #bd1425;
+  transform: scale(1.15);
+}
+
+.draggable-text:hover .btn-delete-text, 
+.draggable-text.selected .btn-delete-text {
+  display: flex;
+}
+
+/* =========================================
+   7. MODAL DE TEXTO PERSONALIZADO
+   ========================================= */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 200;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(6px);
+}
+
+.modal-overlay.active { 
+  display: flex; 
+}
+
+.modal-box {
+  background: #181818;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 24px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 15px rgba(212, 175, 55, 0.1);
+  animation: modalFadeIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-box h3 { 
+  font-size: 16px; 
+  color: #ffffff; 
+  text-align: center; 
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modal-box input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #242424;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.modal-box input:focus { 
+  border-color: #D4AF37; 
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.modal-buttons { 
+  display: flex; 
+  gap: 12px; 
+}
+
+.modal-buttons button { 
+  flex: 1; 
+  padding: 12px; 
+  font-weight: 700; 
+  border-radius: 8px; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-cancel { 
+  background: #262626; 
+  color: #cccccc;
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+.btn-cancel:hover {
+  background: #333333;
+  color: #ffffff;
+}
+
+.btn-confirm { 
+  background: #D4AF37; 
+  color: #121212;
+  border: 1px solid #D4AF37; 
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+}
+
+.btn-confirm:hover {
+  background: #b59226;
+  border-color: #b59226;
+}
+
+/* =========================================
+   8. SCROLLBAR PERSONALIZADO FLC
+   ========================================= */
+#sidebar::-webkit-scrollbar,
+#spotsContainer::-webkit-scrollbar {
+  width: 5px;
+}
+
+#sidebar::-webkit-scrollbar-track,
+#spotsContainer::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+#sidebar::-webkit-scrollbar-thumb,
+#spotsContainer::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+#sidebar::-webkit-scrollbar-thumb:hover,
+#spotsContainer::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}
+
+/* =========================================
+   9. REGLAS RESPONSIVAS EXTREMAS
+   ========================================= */
+@media (max-width: 768px) {
+  #mobileToggle { display: block; }
+  #btnCloseSidebar { display: block; }
+  
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 85vw;
+    max-width: 320px;
+    transform: translateX(-100%);
+    box-shadow: 10px 0 30px rgba(0,0,0,0.95);
+  }
+
+  #sidebar.open { transform: translateX(0); }
+  #overlay.active { display: block; }
+}
+
+@media (max-width: 380px) {
+  #sidebar { width: 90vw; padding: 12px; }
+  .toolbar { grid-template-columns: repeat(2, 1fr); }
+  button, select { font-size: 12px; padding: 8px; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- BOTÓN FLOTANTE MÓVIL Y OVERLAY -->
+  <button id="mobileToggle">☰ Menú / Herramientas</button>
+  <div id="overlay"></div>
+
+  <!-- MODAL DE TEXTO PERSONALIZADO -->
+  <div id="textModal" class="modal-overlay">
+    <div class="modal-box">
+      <h3>🔤 Escribir Indicación</h3>
+      <input type="text" id="customTextInput" placeholder="Ej: Soporte / Rotar aquí..." autocomplete="off">
+      <div class="modal-buttons">
+        <button id="btnCancelText" class="btn-cancel">Cancelar</button>
+        <button id="btnConfirmText" class="btn-confirm">Añadir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL LATERAL -->
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <h2>🗺️ Mapas & Spots</h2>
+      <button id="btnCloseSidebar">✖ Cerrar</button>
+    </div>
+    
+    <label for="mapSelect" style="font-size: 12px; color: #aaa;">Seleccionar Mapa:</label>
+    <select id="mapSelect">
+      <option value="bermuda">Bermuda</option>
+      <option value="purgatorio">Purgatorio</option>
+      <option value="kalahari">Kalahari</option>
+      <option value="solara">Solara</option>
+      <option value="nexterra">Nexterra</option>
+    </select>
+
+    <!-- HERRAMIENTAS DE DIBUJO -->
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <input type="color" id="colorPicker" value="#ff0000" title="Color">
+        <input type="range" id="lineWidth" min="1" max="15" value="3" title="Grosor">
+      </div>
+      <button id="btnDraw" class="active">✏️ Dibujar</button>
+      <button id="btnErase">🧹 Goma</button>
+      <button id="btnText">🔤 Texto</button>
+      <button id="btnClear">🗑️ Limpiar</button>
+    </div>
+
+    <!-- CONTROLES DE ZOOM Y DESCARGA -->
+    <div class="toolbar">
+      <button id="btnZoomIn">➕ Zoom</button>
+      <button id="btnZoomOut">➖ Zoom</button>
+      <button id="btnResetZoom">🔄 Reset</button>
+      <button id="btnDownload">💾 Guardar</button>
+      <button><a style="text-decoration: underline; text-decoration:none; color: #fff;" href="https://fn-league.vercel.app/">FLC</a></button>
+    </div>
+
+    <h3 style="font-size: 14px; margin-top: 5px;">Ubicaciones (Spots)</h3>
+    <div id="spotsContainer"></div>
+  </div>
+
+  <!-- VISTA DEL CANVAS (SISTEMA DE CAPAS) -->
+  <div id="viewport">
+    <div id="canvasWrapper">
+      <canvas id="bgCanvas" width="800" height="800"></canvas>
+      <canvas id="drawCanvas" width="800" height="800"></canvas>
+    </div>
+  </div>
+
+  <!-- LÓGICA DE LA APLICACIÓN -->
+  <script>
+    // --- DATOS DE MAPAS Y SPOTS ---
+    const mapsData = {
+      bermuda: {
+        baseImage: "bermuda.jpeg",
+        spots: [
+          { name: "Clock Tower", image: "imagenes/bermuda/clock_tower.jpg" },
+          { name: "Factory", image: "imagenes/bermuda/factory.jpg" },
+          { name: "Peak", image: "imagenes/bermuda/peak.jpg" },
+          { name: "Bimasakti Strip", image: "imagenes/bermuda/bimasakti.jpg" },
+          { name: "Pochinok", image: "imagenes/bermuda/pochinok.jpg" },
+          { name: "Mill", image: "imagenes/bermuda/mill.jpg" },
+          { name: "Mars Electric", image: "imagenes/bermuda/mars_electric.jpg" },
+          { name: "Cape Town", image: "imagenes/bermuda/cape_town.jpg" },
+          { name: "Shipyard", image: "imagenes/bermuda/shipyard.jpg" },
+          { name: "Rim Nam Village", image: "imagenes/bermuda/rim_nam.jpg" },
+          { name: "Sentosa", image: "imagenes/bermuda/sentosa.jpg" },
+          { name: "Graveyard", image: "imagenes/bermuda/graveyard.jpg" },
+          { name: "Observatory", image: "imagenes/bermuda/observatory.jpg" },
+          { name: "Hangar", image: "imagenes/bermuda/hangar.jpg" },
+          { name: "Katulistiwa", image: "imagenes/bermuda/katulistiwa.jpg" },
+          { name: "Plantation", image: "imagenes/bermuda/plantation.jpg" },
+          { name: "Riverside", image: "imagenes/bermuda/riverside.jpg" },
+          { name: "Keraton", image: "imagenes/bermuda/keraton.jpg" },
+          { name: "Bullseye", image: "imagenes/bermuda/bullseye.jpg" },
+          { name: "Kota Tua", image: "imagenes/bermuda/kota_tua.jpg" },
+          { name: "Waterfront", image: "imagenes/bermuda/waterfront.jpg" },
+          { name: "Peak Sur", image: "imagenes/bermuda/peak_sur.jpg" },
+          { name: "Puente Sentosa", image: "imagenes/bermuda/puente_sentosa.jpg" },
+          { name: "Garajes Bimasakti", image: "imagenes/bermuda/garajes.jpg" },
+          { name: "Gasolinera Central", image: "imagenes/bermuda/gasolinera.jpg" }
+        ]
+      },
+      purgatorio: {
+        baseImage: "purgatorio.jpeg",
+        spots: [
+          { name: "Brasilia", image: "imagenes/purgatorio/brasilia.jpg" },
+          { name: "Central", image: "imagenes/purgatorio/central.jpg" },
+          { name: "Moathouse", image: "imagenes/purgatorio/moathouse.jpg" },
+          { name: "Marbleworks", image: "imagenes/purgatorio/marbleworks.jpg" },
+          { name: "Fields", image: "imagenes/purgatorio/fields.jpg" },
+          { name: "Quarry", image: "imagenes/purgatorio/quarry.jpg" },
+          { name: "Fire Brigade", image: "imagenes/purgatorio/fire_brigade.jpg" },
+          { name: "Ski Heights", image: "imagenes/purgatorio/ski_heights.jpg" },
+          { name: "Mt. Villa", image: "imagenes/purgatorio/mt_villa.jpg" },
+          { name: "Campsite", image: "imagenes/purgatorio/campsite.jpg" },
+          { name: "Golf Course", image: "imagenes/purgatorio/golf_course.jpg" },
+          { name: "Forge", image: "imagenes/purgatorio/forge.jpg" },
+          { name: "Crossroads", image: "imagenes/purgatorio/crossroads.jpg" },
+          { name: "Lumber Mill", image: "imagenes/purgatorio/lumber_mill.jpg" },
+          { name: "Brasilia Este", image: "imagenes/purgatorio/brasilia_este.jpg" },
+          { name: "Brasilia Oeste", image: "imagenes/purgatorio/brasilia_oeste.jpg" },
+          { name: "Canal Norte", image: "imagenes/purgatorio/canal_norte.jpg" },
+          { name: "Puente Principal", image: "imagenes/purgatorio/puente.jpg" },
+          { name: "Torre de Radio", image: "imagenes/purgatorio/torre_radio.jpg" },
+          { name: "Cabañas Sur", image: "imagenes/purgatorio/cabanas_sur.jpg" },
+          { name: "Costa Oeste", image: "imagenes/purgatorio/costa_oeste.jpg" },
+          { name: "Zona Industrial", image: "imagenes/purgatorio/zona_industrial.jpg" },
+          { name: "Residencia", image: "imagenes/purgatorio/residencia.jpg" },
+          { name: "Tiendita Central", image: "imagenes/purgatorio/tiendita.jpg" },
+          { name: "Garaje Brasilia", image: "imagenes/purgatorio/garaje_brasilia.jpg" }
+        ]
+      },
+      kalahari: {
+        baseImage: "kalahari.jpeg",
+        spots: [
+          { name: "Refinery", image: "imagenes/kalahari/refinery.jpg" },
+          { name: "Command Post", image: "imagenes/kalahari/command_post.jpg" },
+          { name: "Mammoth", image: "imagenes/kalahari/mammoth.jpg" },
+          { name: "Confinement", image: "imagenes/kalahari/confinement.jpg" },
+          { name: "The Sub", image: "imagenes/kalahari/the_sub.jpg" },
+          { name: "Bayfront", image: "imagenes/kalahari/bayfront.jpg" },
+          { name: "Foundation", image: "imagenes/kalahari/foundation.jpg" },
+          { name: "Council Hall", image: "imagenes/kalahari/council_hall.jpg" },
+          { name: "Old 'Eltopo'", image: "imagenes/kalahari/old_eltopo.jpg" },
+          { name: "Santa Catarina", image: "imagenes/kalahari/santa_catarina.jpg" },
+          { name: "Stone Ridge", image: "imagenes/kalahari/stone_ridge.jpg" },
+          { name: "The Maze", image: "imagenes/kalahari/the_maze.jpg" },
+          { name: "Shallows", image: "imagenes/kalahari/shallows.jpg" },
+          { name: "Canyon Norte", image: "imagenes/kalahari/canyon_norte.jpg" },
+          { name: "Oasis", image: "imagenes/kalahari/oasis.jpg" },
+          { name: "Plataforma Central", image: "imagenes/kalahari/plataforma.jpg" },
+          { name: "Excavación", image: "imagenes/kalahari/excavacion.jpg" },
+          { name: "Torre de Control", image: "imagenes/kalahari/torre_control.jpg" },
+          { name: "Paso de Montaña", image: "imagenes/kalahari/paso_montana.jpg" },
+          { name: "Campamento Sur", image: "imagenes/kalahari/campamento_sur.jpg" },
+          { name: "Ruinas", image: "imagenes/kalahari/ruinas.jpg" },
+          { name: "Contenedores", image: "imagenes/kalahari/contenedores.jpg" },
+          { name: "Puente Submarino", image: "imagenes/kalahari/puente_submarino.jpg" },
+          { name: "Cueva", image: "imagenes/kalahari/cueva.jpg" },
+          { name: "Garaje Refinery", image: "imagenes/kalahari/garaje_refinery.jpg" }
+        ]
+      },
+      solara: {
+        baseImage: "solara.jpeg",
+        spots: [
+          { name: "Planta Solar Central", image: "imagenes/solara/planta_solar.jpg" },
+          { name: "Núcleo Energético", image: "imagenes/solara/nucleo.jpg" },
+          { name: "Domo de Investigación", image: "imagenes/solara/domo.jpg" },
+          { name: "Plaza Solar", image: "imagenes/solara/plaza.jpg" },
+          { name: "Centro Tech", image: "imagenes/solara/centro_tech.jpg" },
+          { name: "Mirador del Valle", image: "imagenes/solara/mirador.jpg" },
+          { name: "Eco Jardines", image: "imagenes/solara/jardines.jpg" },
+          { name: "Laboratorio Quantum", image: "imagenes/solara/lab_quantum.jpg" },
+          { name: "Estación de Carga", image: "imagenes/solara/estacion_carga.jpg" },
+          { name: "Puerto de Carga", image: "imagenes/solara/puerto.jpg" },
+          { name: "Sala de Control", image: "imagenes/solara/sala_control.jpg" },
+          { name: "Lago Cristalino", image: "imagenes/solara/lago.jpg" },
+          { name: "Sector Alfa", image: "imagenes/solara/sector_alfa.jpg" },
+          { name: "Sector Beta", image: "imagenes/solara/sector_beta.jpg" },
+          { name: "Subestación Norte", image: "imagenes/solara/subestacion_norte.jpg" },
+          { name: "Hangar Principal", image: "imagenes/solara/hangar.jpg" },
+          { name: "Puesto de Avanzada 01", image: "imagenes/solara/avanzada_01.jpg" },
+          { name: "Puesto de Avanzada 02", image: "imagenes/solara/avanzada_02.jpg" },
+          { name: "Antenas Satelitales", image: "imagenes/solara/antenas.jpg" },
+          { name: "Puente Elevado", image: "imagenes/solara/puente.jpg" },
+          { name: "Entrada Principal", image: "imagenes/solara/entrada.jpg" },
+          { name: "Zona de Turbinas", image: "imagenes/solara/turbinas.jpg" },
+          { name: "Almacén Central", image: "imagenes/solara/almacen.jpg" },
+          { name: "Mina de Cristales", image: "imagenes/solara/mina.jpg" },
+          { name: "Torre de Transmisión", image: "imagenes/solara/torre.jpg" }
+        ]
+      },
+      nexterra: {
+        baseImage: "nexterra.jpeg",
+        spots: [
+          { name: "Grav Labs", image: "imagenes/nexterra/grav_labs.jpg" },
+          { name: "Museum", image: "imagenes/nexterra/museum.jpg" },
+          { name: "Intellect Center", image: "imagenes/nexterra/intellect_center.jpg" },
+          { name: "Deca Square", image: "imagenes/nexterra/deca_square.jpg" },
+          { name: "Plaza Cueva", image: "imagenes/nexterra/plaza_cueva.jpg" },
+          { name: "Mud Site", image: "imagenes/nexterra/mud_site.jpg" },
+          { name: "Farm", image: "imagenes/nexterra/farm.jpg" },
+          { name: "Hash Out", image: "imagenes/nexterra/hash_out.jpg" },
+          { name: "Turbine", image: "imagenes/nexterra/turbine.jpg" },
+          { name: "Twin Bridge", image: "imagenes/nexterra/twin_bridge.jpg" },
+          { name: "Zipway", image: "imagenes/nexterra/zipway.jpg" },
+          { name: "Rust Town", image: "imagenes/nexterra/rust_town.jpg" },
+          { name: "Zona de Gravidez Cero", image: "imagenes/nexterra/gravidez_cero.jpg" },
+          { name: "Laboratorio Alto", image: "imagenes/nexterra/lab_alto.jpg" },
+          { name: "Complejo Oeste", image: "imagenes/nexterra/complejo_oeste.jpg" },
+          { name: "Complejo Este", image: "imagenes/nexterra/complejo_este.jpg" },
+          { name: "Paneles Solares", image: "imagenes/nexterra/paneles.jpg" },
+          { name: "Depósito Tech", image: "imagenes/nexterra/deposito.jpg" },
+          { name: "Estación Sur", image: "imagenes/nexterra/estacion_sur.jpg" },
+          { name: "Pasarela Aérea", image: "imagenes/nexterra/pasarela.jpg" },
+          { name: "Curva del Río", image: "imagenes/nexterra/curva_rio.jpg" },
+          { name: "Sector 7", image: "imagenes/nexterra/sector_7.jpg" },
+          { name: "Centro de Portales", image: "imagenes/nexterra/portales.jpg" },
+          { name: "Garaje Grav Labs", image: "imagenes/nexterra/garaje_grav.jpg" },
+          { name: "Torre Futuro", image: "imagenes/nexterra/torre_futuro.jpg" }
+        ]
+      }
+    };
+
+    // --- ELEMENTOS DEL DOM ---
+    const bgCanvas = document.getElementById('bgCanvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    const drawCanvas = document.getElementById('drawCanvas');
+    const drawCtx = drawCanvas.getContext('2d');
+    const canvasWrapper = document.getElementById('canvasWrapper');
+    
+    const sidebar = document.getElementById('sidebar');
+    const mobileToggle = document.getElementById('mobileToggle');
+    const btnCloseSidebar = document.getElementById('btnCloseSidebar');
+    const overlay = document.getElementById('overlay');
+
+    const mapSelect = document.getElementById('mapSelect');
+    const spotsContainer = document.getElementById('spotsContainer');
+    const colorPicker = document.getElementById('colorPicker');
+    const lineWidthInput = document.getElementById('lineWidth');
+    
+    const btnDraw = document.getElementById('btnDraw');
+    const btnErase = document.getElementById('btnErase');
+    const btnText = document.getElementById('btnText');
+    const btnClear = document.getElementById('btnClear');
+    
+    const btnZoomIn = document.getElementById('btnZoomIn');
+    const btnZoomOut = document.getElementById('btnZoomOut');
+    const btnResetZoom = document.getElementById('btnResetZoom');
+    const btnDownload = document.getElementById('btnDownload');
+
+    // Modal de texto
+    const textModal = document.getElementById('textModal');
+    const customTextInput = document.getElementById('customTextInput');
+    const btnCancelText = document.getElementById('btnCancelText');
+    const btnConfirmText = document.getElementById('btnConfirmText');
+
+    // --- ESTADOS DE LA APLICACIÓN ---
+    let currentMap = 'bermuda';
+    let currentImage = new Image();
+    let isDrawing = false;
+    let activeTool = 'draw';
+    let currentScale = 1;
+    let pendingTextCoords = null;
+
+    currentImage.crossOrigin = "anonymous";
+
+    // --- CONTROL DE MENÚ MÓVIL ---
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+    }
+    mobileToggle.addEventListener('click', toggleSidebar);
+    btnCloseSidebar.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
+
+    // --- CARGAR MAPA E IMAGEN ---
+    function loadMapImage(src) {
+      currentImage.src = src;
+      currentImage.onload = () => {
+        if (currentImage.naturalWidth > 0) {
+          bgCanvas.width = drawCanvas.width = currentImage.naturalWidth;
+          bgCanvas.height = drawCanvas.height = currentImage.naturalHeight;
+        }
+        bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+        bgCtx.drawImage(currentImage, 0, 0, bgCanvas.width, bgCanvas.height);
+        updateAllTextFontSizes();
+      };
+    }
+
+    function removeAllTextElements() {
+      document.querySelectorAll('.draggable-text').forEach(el => el.remove());
+    }
+
+    function setMap(mapKey) {
+      currentMap = mapKey;
+      const mapData = mapsData[mapKey];
+      
+      drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+      removeAllTextElements();
+      spotsContainer.innerHTML = '';
+      
+      const btnGeneral = document.createElement('button');
+      btnGeneral.className = 'btn-spot';
+      btnGeneral.innerText = '🗺️ Mapa General';
+      btnGeneral.onclick = () => {
+        loadMapImage(mapData.baseImage);
+        if (window.innerWidth <= 768) toggleSidebar();
+      };
+      spotsContainer.appendChild(btnGeneral);
+
+      mapData.spots.forEach((spot) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-spot';
+        btn.innerText = spot.name;
+        btn.onclick = () => {
+          loadMapImage(spot.image);
+          if (window.innerWidth <= 768) toggleSidebar();
+        };
+        spotsContainer.appendChild(btn);
+      });
+
+      loadMapImage(mapData.baseImage);
+    }
+
+    // --- OBTENER COORDENADAS PRECISAS (TOUCH & MOUSE) ---
+    function getCanvasCoordinates(e) {
+      const rect = drawCanvas.getBoundingClientRect();
+      const scaleX = drawCanvas.width / rect.width;
+      const scaleY = drawCanvas.height / rect.height;
+
+      const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
+    }
+
+    // --- LÓGICA DE DIBUJO Y TEXTO ---
+    function startDrawing(e) {
+      const coords = getCanvasCoordinates(e);
+
+      if (activeTool === 'draw' || activeTool === 'erase') {
+        isDrawing = true;
+        drawCtx.beginPath();
+        drawCtx.moveTo(coords.x, coords.y);
+      } else if (activeTool === 'text') {
+        pendingTextCoords = coords;
+        openTextModal();
+      }
+    }
+
+    function draw(e) {
+      if (!isDrawing || (activeTool !== 'draw' && activeTool !== 'erase')) return;
+      const coords = getCanvasCoordinates(e);
+
+      if (activeTool === 'erase') {
+        drawCtx.globalCompositeOperation = 'destination-out';
+        drawCtx.lineWidth = lineWidthInput.value * 5;
+      } else {
+        drawCtx.globalCompositeOperation = 'source-over';
+        drawCtx.strokeStyle = colorPicker.value;
+        drawCtx.lineWidth = lineWidthInput.value;
+      }
+
+      drawCtx.lineCap = 'round';
+      drawCtx.lineJoin = 'round';
+      drawCtx.lineTo(coords.x, coords.y);
+      drawCtx.stroke();
+    }
+
+    function stopDrawing() {
+      if (isDrawing) {
+        drawCtx.closePath();
+        isDrawing = false;
+      }
+    }
+
+    // --- MANEJO DE OBJETOS DE TEXTO ARRASTRABLES (DRAGGABLE TEXT) ---
+    function createTextElement(text, x, y, color, fontSize) {
+      const textDiv = document.createElement('div');
+      textDiv.className = 'draggable-text';
+      textDiv.dataset.x = x;
+      textDiv.dataset.y = y;
+      textDiv.dataset.text = text;
+      textDiv.dataset.color = color;
+      textDiv.dataset.fontSize = fontSize;
+
+      textDiv.style.left = (x / drawCanvas.width * 100) + '%';
+      textDiv.style.top = (y / drawCanvas.height * 100) + '%';
+
+      const textSpan = document.createElement('span');
+      textSpan.className = 'text-content';
+      textSpan.innerText = text;
+      textSpan.style.color = color;
+
+      const currentCanvasWidth = drawCanvas.clientWidth || drawCanvas.width;
+      const displaySize = (fontSize / drawCanvas.width) * currentCanvasWidth;
+      textSpan.style.fontSize = Math.max(12, displaySize) + 'px';
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'btn-delete-text';
+      deleteBtn.innerHTML = '×';
+      deleteBtn.title = 'Eliminar texto';
+      deleteBtn.onclick = (e) => {
+        e.stopPropagation();
+        textDiv.remove();
+      };
+
+      textDiv.appendChild(textSpan);
+      textDiv.appendChild(deleteBtn);
+
+      makeElementDraggable(textDiv);
+      canvasWrapper.appendChild(textDiv);
+    }
+
+    function makeElementDraggable(el) {
+      let isDragging = false;
+
+      function onStart(e) {
+        isDragging = true;
+        el.classList.add('selected');
+        e.stopPropagation(); // Evita que se active el pincel mientras mueves el texto
+      }
+
+      function onMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        e.stopPropagation();
+
+        const rect = drawCanvas.getBoundingClientRect();
+        const scaleX = drawCanvas.width / rect.width;
+        const scaleY = drawCanvas.height / rect.height;
+
+        const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+
+        let canvasX = (clientX - rect.left) * scaleX;
+        let canvasY = (clientY - rect.top) * scaleY;
+
+        canvasX = Math.max(0, Math.min(drawCanvas.width, canvasX));
+        canvasY = Math.max(0, Math.min(drawCanvas.height, canvasY));
+
+        el.dataset.x = canvasX;
+        el.dataset.y = canvasY;
+
+        el.style.left = (canvasX / drawCanvas.width * 100) + '%';
+        el.style.top = (canvasY / drawCanvas.height * 100) + '%';
+      }
+
+      function onEnd() {
+        if (isDragging) {
+          isDragging = false;
+          setTimeout(() => el.classList.remove('selected'), 1000);
+        }
+      }
+
+      el.addEventListener('mousedown', onStart);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onEnd);
+
+      el.addEventListener('touchstart', onStart, { passive: false });
+      window.addEventListener('touchmove', onMove, { passive: false });
+      window.addEventListener('touchend', onEnd);
+    }
+
+    function updateAllTextFontSizes() {
+      const currentCanvasWidth = drawCanvas.clientWidth || 800;
+      document.querySelectorAll('.draggable-text').forEach(el => {
+        const nativeSize = parseFloat(el.dataset.fontSize);
+        const displaySize = (nativeSize / drawCanvas.width) * currentCanvasWidth;
+        const textSpan = el.querySelector('.text-content');
+        if (textSpan) textSpan.style.fontSize = Math.max(12, displaySize) + 'px';
+      });
+    }
+    window.addEventListener('resize', updateAllTextFontSizes);
+
+    // Modal de Texto
+    function openTextModal() {
+      customTextInput.value = '';
+      textModal.classList.add('active');
+      setTimeout(() => customTextInput.focus(), 100);
+    }
+
+    function closeTextModal() {
+      textModal.classList.remove('active');
+      pendingTextCoords = null;
+    }
+
+    function confirmAddText() {
+      const text = customTextInput.value.trim();
+      if (text && pendingTextCoords) {
+        const fontSize = lineWidthInput.value * 4 + 18;
+        const color = colorPicker.value;
+        createTextElement(text, pendingTextCoords.x, pendingTextCoords.y, color, fontSize);
+      }
+      closeTextModal();
+    }
+
+    btnConfirmText.addEventListener('click', confirmAddText);
+    btnCancelText.addEventListener('click', closeTextModal);
+    customTextInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') confirmAddText();
+    });
+
+    // Eventos Mouse
+    drawCanvas.addEventListener('mousedown', startDrawing);
+    drawCanvas.addEventListener('mousemove', draw);
+    drawCanvas.addEventListener('mouseup', stopDrawing);
+    drawCanvas.addEventListener('mouseleave', stopDrawing);
+
+    // Eventos Touch (Móviles)
+    drawCanvas.addEventListener('touchstart', (e) => { startDrawing(e); e.preventDefault(); }, { passive: false });
+    drawCanvas.addEventListener('touchmove', (e) => { draw(e); e.preventDefault(); }, { passive: false });
+    drawCanvas.addEventListener('touchend', stopDrawing);
+
+    // --- HERRAMIENTAS Y ZOOM ---
+    mapSelect.addEventListener('change', (e) => setMap(e.target.value));
+
+    function setActiveTool(tool, activeBtn) {
+      activeTool = tool;
+      [btnDraw, btnErase, btnText].forEach(b => b.classList.remove('active'));
+      activeBtn.classList.add('active');
+    }
+
+    btnDraw.addEventListener('click', () => setActiveTool('draw', btnDraw));
+    btnErase.addEventListener('click', () => setActiveTool('erase', btnErase));
+    btnText.addEventListener('click', () => setActiveTool('text', btnText));
+
+    btnClear.addEventListener('click', () => {
+      drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+      removeAllTextElements();
+    });
+
+    function updateZoom() {
+      canvasWrapper.style.transform = `scale(${currentScale})`;
+    }
+
+    btnZoomIn.addEventListener('click', () => {
+      if (currentScale < 3.5) { currentScale += 0.25; updateZoom(); }
+    });
+
+    btnZoomOut.addEventListener('click', () => {
+      if (currentScale > 0.5) { currentScale -= 0.25; updateZoom(); }
+    });
+
+    btnResetZoom.addEventListener('click', () => {
+      currentScale = 1;
+      updateZoom();
+    });
+
+    // --- DESCARGAR (INTEGRA LOS TEXTOS Y DIBUJOS) ---
+    btnDownload.addEventListener('click', () => {
+      try {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = drawCanvas.width;
+        tempCanvas.height = drawCanvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+
+        // 1. Dibujar el mapa de fondo
+        tempCtx.drawImage(bgCanvas, 0, 0);
+
+        // 2. Dibujar las líneas y trazos a mano alzada
+        tempCtx.drawImage(drawCanvas, 0, 0);
+
+        // 3. Estampar todos los textos interactivos creados
+        const textElements = canvasWrapper.querySelectorAll('.draggable-text');
+        textElements.forEach(el => {
+          const x = parseFloat(el.dataset.x);
+          const y = parseFloat(el.dataset.y);
+          const text = el.dataset.text;
+          const color = el.dataset.color;
+          const fontSize = parseFloat(el.dataset.fontSize);
+
+          tempCtx.globalCompositeOperation = 'source-over';
+          tempCtx.fillStyle = color;
+          tempCtx.font = `bold ${fontSize}px Arial`;
+          tempCtx.textAlign = 'center';
+          tempCtx.textBaseline = 'middle';
+          tempCtx.shadowColor = "black";
+          tempCtx.shadowBlur = 5;
+          tempCtx.fillText(text, x, y);
+          tempCtx.shadowBlur = 0;
+        });
+
+        // 4. Generar y descargar la imagen PNG
+        const imageURI = tempCanvas.toDataURL("image/png");
+        const link = document.createElement('a');
+        link.download = `analisis-${currentMap}-${Date.now()}.png`;
+        link.href = imageURI;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (err) {
+        alert("Atención: Si utilizas imágenes alojadas de forma remota sin permisos CORS configurados, el navegador puede restringir la descarga por privacidad.");
+      }
+    });
+
+    // INICIALIZAR
+    setMap('bermuda');
+  </script>
+</body>
+</html>
+
+
+
