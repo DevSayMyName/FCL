@@ -1163,9 +1163,109 @@ a:hover {
   border-radius: 10px;
 }
 /* ===================================================
-   RESPONSIVE DESIGN (S26 Ultra, iPhone Mini, Tablets)
+   COMPONENTE: COACHING FLC (Estilos Base)
    =================================================== */
 
+.coachingFLC-container {
+  max-width: 1200px;
+  width: 90%;
+  margin: 2.5rem auto;
+  padding: 2rem 2.5rem;
+  background-color: var(--bg-tarjeta, #181818);
+  border: 1px solid var(--borde-tarjeta, rgba(212, 175, 55, 0.25));
+  border-left: 5px solid var(--color-dorado, #D4AF37);
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.coachingFLC-container:hover {
+  border-color: var(--color-dorado, #D4AF37);
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.15);
+}
+
+.coachingFLC-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0; /* Previene desbordamiento de texto */
+}
+
+.coachingFLC-tag {
+  color: var(--color-rojo, #9B111E);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.coachingFLC-titulo {
+  color: var(--texto-principal, #ffffff);
+  font-size: clamp(1.1rem, 2vw, 1.35rem); /* Tipografía fluida */
+  font-weight: 700;
+  line-height: 1.4;
+  font-style: italic;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.coachingFLC-texto {
+  color: var(--texto-secundario, #cccccc);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.coachingFLC-texto strong {
+  color: var(--color-dorado, #D4AF37);
+}
+
+.coachingFLC-action {
+  flex-shrink: 0;
+}
+
+.coachingFLC-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px; /* Tamaño táctil optimizado */
+  padding: 0.85rem 1.8rem;
+  background-color: var(--color-dorado, #D4AF37);
+  color: var(--color-negro, #121212);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+  transition: all 0.3s ease;
+}
+
+.coachingFLC-btn:hover {
+  background-color: #f1c40f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  color: #000000;
+}
+
+.coachingFLC-btn:active {
+  transform: translateY(0);
+}
+
+
+/* ===================================================
+   RESPONSIVE DESIGN ADAPTATIVO
+   =================================================== */
+
+/* --- TABLETS Y PANTALLAS MEDIANAS (≤ 1024px) --- */
 @media screen and (max-width: 1024px) {
   .dia-grid {
     gap: 2rem;
@@ -1173,8 +1273,13 @@ a:hover {
   .puntos-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .coachingFLC-container {
+    width: 95%;
+    padding: 1.8rem 2rem;
+  }
 }
 
+/* --- TABLETS EN RETRATO / PANTALLAS PEQUEÑAS (≤ 992px) --- */
 @media screen and (max-width: 992px) {
   .clasificacionFLC-container {
     grid-template-columns: 1fr;
@@ -1195,6 +1300,7 @@ a:hover {
   }
 }
 
+/* --- MÓVILES GRANDES Y TABLETS COMPACTAS (≤ 768px) --- */
 @media screen and (max-width: 768px) {
   .reglamentoFLC-title {
     font-size: 2.2rem;
@@ -1210,6 +1316,7 @@ a:hover {
     font-size: 0.85rem;
   }
 
+  /* Menú Navegación */
   .menuFLC {
     padding: 1rem 1.5rem; 
   }
@@ -1255,6 +1362,7 @@ a:hover {
     max-height: 80px; 
   }
 
+  /* Hero Section */
   .heroFLC {
     padding: 4rem 1.5rem;
   }
@@ -1278,6 +1386,7 @@ a:hover {
     justify-content: center;
   }
 
+  /* Seccion Nosotros */
   .nosotrosFLC {
     padding: 4rem 1.5rem;
   }
@@ -1304,6 +1413,7 @@ a:hover {
     font-size: 1.4rem;
   }
 
+  /* Jornadas */
   .jornadasFLC-section {
     padding: 3rem 1rem;
   }
@@ -1346,213 +1456,19 @@ a:hover {
     margin: 0 auto;
     order: 4;
   }
-}
 
-@media screen and (max-width: 576px) {
-  .clasificacionFLC-section {
-    padding: 4rem 1rem;
-  }
-  
-  .clasificacionFLC-title {
-    font-size: 2.1rem;
-  }
-  
-  .clasificacionFLC-tabla-wrapper {
-    padding: 0.8rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .reglamentoFLC-section {
-    padding: 4rem 1rem;
-  }
-  
-  .reglamentoFLC-tabs {
-    gap: 5px;
-  }
-
-  .tab-btn {
-    padding: 8px 12px;
-    font-size: 0.8rem;
-    flex-grow: 1;
-    text-align: center;
-  }
-
-  .puntos-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .heroFLC {
-    padding: 2.5rem 1rem;
-  }
-
-  .heroFLC-welcome {
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-  }
-
-  .heroFLC-title {
-    font-size: 2.2rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .heroFLC-typewriter-box {
-    font-size: 1.4rem;
-  }
-
-  .heroFLC-img {
-    max-width: 85%;
-  }
-
-  .nosotrosFLC {
-    padding: 3rem 1rem;
-  }
-
-  .nosotrosFLC-container {
-    gap: 2.5rem;
-  }
-
-  .nosotrosFLC-title {
-    font-size: 2rem;
-  }
-
-  .nosotrosFLC-description {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-
-  .nosotrosFLC-logo-img {
-    max-height: 180px;
-  }
-
-  .nosotrosFLC-quote-box {
-    padding: 2rem 0.5rem;
-  }
-
-  .nosotrosFLC-quote {
-    font-size: 1.2rem;
-    line-height: 1.5;
-  }
-}
-
-
-
-/* DISEÑO DE SECCION A HERRAMIENTA DE COACHING */
-/* =========================================
-   COMPONENTE: COACHING FLC
-   ========================================= */
-
-.coachingFLC-container {
-  max-width: 1200px;
-  margin: 2.5rem auto;
-  padding: 2rem 2.5rem;
-  background-color: var(--bg-tarjeta, #181818);
-  border: 1px solid var(--borde-tarjeta, rgba(212, 175, 55, 0.25));
-  border-left: 5px solid var(--color-dorado, #D4AF37); /* Detalle lateral dorado */
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-.coachingFLC-container:hover {
-  border-color: var(--color-dorado, #D4AF37);
-  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.15);
-}
-
-/* Columna Izquierda: Información */
-.coachingFLC-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.coachingFLC-tag {
-  color: var(--color-rojo, #9B111E);
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.coachingFLC-titulo {
-  color: var(--texto-principal, #ffffff);
-  font-size: 1.35rem;
-  font-weight: 700;
-  line-height: 1.4;
-  font-style: italic;
-  margin: 0;
-  transition: color 0.3s ease;
-}
-
-.coachingFLC-texto {
-  color: var(--texto-secundario, #cccccc);
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin: 0;
-  transition: color 0.3s ease;
-}
-
-.coachingFLC-texto strong {
-  color: var(--color-dorado, #D4AF37);
-}
-
-/* Columna Derecha: Botón */
-.coachingFLC-action {
-  flex-shrink: 0;
-}
-
-.coachingFLC-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.85rem 1.8rem;
-  background-color: var(--color-dorado, #D4AF37);
-  color: var(--color-negro, #121212);
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-decoration: none;
-  border-radius: 6px;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
-  transition: all 0.3s ease;
-}
-
-.coachingFLC-btn:hover {
-  background-color: #f1c40f;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-  color: #000000;
-}
-
-.coachingFLC-btn:active {
-  transform: translateY(0);
-}
-
-/* =========================================
-   RESPONSIVE (Móviles y Tablets)
-   ========================================= */
-@media screen and (max-width: 768px) {
+  /* Coaching Section Adaptativo */
   .coachingFLC-container {
     flex-direction: column;
     text-align: center;
     padding: 1.8rem 1.2rem;
     gap: 1.5rem;
     border-left-width: 1px;
-    border-top: 4px solid var(--color-dorado, #D4AF37); /* En móvil la barra pasa arriba */
+    border-top: 4px solid var(--color-dorado, #D4AF37);
   }
 
   .coachingFLC-info {
     align-items: center;
-  }
-
-  .coachingFLC-titulo {
-    font-size: 1.15rem;
   }
 
   .coachingFLC-action {
@@ -1560,7 +1476,128 @@ a:hover {
   }
 
   .coachingFLC-btn {
-    width: 100%; /* Botón ancho completo en celulares */
+    width: 100%;
     box-sizing: border-box;
+  }
+}
+
+/* --- MÓVILES MEDIANOS (≤ 576px) --- */
+@media screen and (max-width: 576px) {
+  .clasificacionFLC-section {
+    padding: 3rem 0.8rem;
+  }
+  
+  .clasificacionFLC-title {
+    font-size: 2.1rem;
+  }
+  
+  .clasificacionFLC-tabla-wrapper {
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+}
+
+/* --- MÓVILES ESTÁNDAR / IPHONE (≤ 480px) --- */
+@media screen and (max-width: 480px) {
+  .reglamentoFLC-section {
+    padding: 3.5rem 0.8rem;
+  }
+  
+  .reglamentoFLC-tabs {
+    gap: 5px;
+  }
+
+  .tab-btn {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .puntos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .heroFLC {
+    padding: 2.5rem 1rem;
+  }
+
+  .heroFLC-welcome {
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+  }
+
+  .heroFLC-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .heroFLC-typewriter-box {
+    font-size: 1.2rem;
+  }
+
+  .heroFLC-img {
+    max-width: 90%;
+  }
+
+  .nosotrosFLC {
+    padding: 2.5rem 1rem;
+  }
+
+  .nosotrosFLC-container {
+    gap: 2rem;
+  }
+
+  .nosotrosFLC-title {
+    font-size: 1.8rem;
+  }
+
+  .nosotrosFLC-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .nosotrosFLC-logo-img {
+    max-height: 160px;
+  }
+
+  .nosotrosFLC-quote-box {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .nosotrosFLC-quote {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+
+  .coachingFLC-container {
+    width: 100%;
+    margin: 1.5rem auto;
+    padding: 1.4rem 1rem;
+  }
+
+  .coachingFLC-texto {
+    font-size: 0.88rem;
+  }
+}
+
+/* --- MÓVILES COMPACTOS / IPHONE MINI (≤ 360px) --- */
+@media screen and (max-width: 360px) {
+  .heroFLC-title {
+    font-size: 1.7rem;
+  }
+
+  .puntos-grid {
+    grid-template-columns: 1fr; /* 1 sola columna si la pantalla es ultra estrecha */
+  }
+
+  .div8, .div9, .div10, .div11 {
+    width: 100% !important; /* Tarjetas al 100% en pantallas muy estrechas */
+  }
+
+  .coachingFLC-btn {
+    font-size: 0.85rem;
+    padding: 0.75rem 1rem;
   }
 }
