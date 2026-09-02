@@ -1102,16 +1102,23 @@ a:hover {
 .equipo-cell {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px; /* Un poco más de espacio entre logo y texto */
 }
 
-/* Evita que los logos se deformen o estiren */
 .equipo-logo {
-  width: 26px;
-  height: 26px;
-  object-fit: contain; /* Garantiza mantener la proporción de la imagen */
-  flex-shrink: 0;      /* Impide que la imagen se reduzca de tamaño */
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  width: 36px;  /* Aumentado de 26px a 36px */
+  height: 36px; /* Aumentado de 26px a 36px */
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+/* Opcional: Ajuste para que en móviles no ocupen demasiado espacio */
+@media screen and (max-width: 480px) {
+  .equipo-logo {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 /* Evita saltos de línea molestos en nombres largos */
