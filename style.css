@@ -925,7 +925,6 @@ a:hover {
   font-size: 1.4rem;
   letter-spacing: 2px;
 }
-
 /* ===================================================
    COMPONENTE: CLASIFICACIÓN EN VIVO (clasificacionFLC)
    =================================================== */
@@ -1024,51 +1023,59 @@ a:hover {
   background-color: var(--bg-tarjeta);
   border: 1px solid var(--borde-tarjeta);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1.2rem;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
   transition: background-color 0.3s ease;
 }
 
+/* Contenedor con Scroll horizontal y vertical limitativo */
 .tabla-scroll-container {
   width: 100%;
+  max-height: 520px; /* Evita que la tabla ocupe toda la pantalla hacia abajo */
   overflow-x: auto;
+  overflow-y: auto;
   display: block;
   -webkit-overflow-scrolling: touch;
+  padding-right: 4px;
 }
 
 .tabla-flc {
   width: 100%;
-  min-width: 650px;
+  min-width: 580px;
   border-collapse: separate;
-  border-spacing: 0 8px;
+  border-spacing: 0 6px; /* Espaciado entre filas más compacto */
   font-family: var(--fuente-textos);
   color: var(--texto-principal);
   text-align: left;
 }
 
-/* Cabeceras */
+/* Cabeceras (Fijadas al hacer scroll vertical) */
 .tabla-flc th {
+  position: sticky;
+  top: 0;
+  z-index: 5;
   background-color: var(--bg-principal);
   color: var(--color-dorado);
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   letter-spacing: 1.5px;
-  padding: 15px;
+  padding: 10px 12px;
   border-bottom: 2px solid var(--color-dorado);
   transition: background-color 0.3s ease;
 }
 
-/* Celdas generales */
+/* Celdas generales (Relleno más compacto) */
 .tabla-flc td {
-  padding: 12px 15px;
+  padding: 8px 12px; /* Reducido para compactar la lista de muchos equipos */
   background-color: var(--bg-tarjeta);
   color: var(--texto-principal);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   border-top: 1px solid var(--borde-tarjeta);
   border-bottom: 1px solid var(--borde-tarjeta);
   transition: background-color 0.3s ease, color 0.3s ease;
+  vertical-align: middle;
 }
 
 .tabla-flc tr td:first-child, 
@@ -1091,6 +1098,28 @@ a:hover {
   text-align: center;
 }
 
+/* --- LOGO Y NOMBRE DE EQUIPO --- */
+.equipo-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Evita que los logos se deformen o estiren */
+.equipo-logo {
+  width: 26px;
+  height: 26px;
+  object-fit: contain; /* Garantiza mantener la proporción de la imagen */
+  flex-shrink: 0;      /* Impide que la imagen se reduzca de tamaño */
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+/* Evita saltos de línea molestos en nombres largos */
+.equipo-nombre {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
 /* Filas alternas */
 .tabla-flc tbody tr:nth-child(even) td {
   background-color: var(--bg-boton);
@@ -1102,7 +1131,7 @@ a:hover {
   border-top: 1px solid var(--color-dorado);
   border-bottom: 1px solid var(--color-dorado);
   color: var(--color-dorado);
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 700;
 }
 
@@ -1118,14 +1147,21 @@ a:hover {
   filter: brightness(0.95);
 }
 
+/* Scrollbars personalizados (Horizontal y Vertical) */
 .tabla-scroll-container::-webkit-scrollbar {
+  width: 6px;
   height: 6px;
 }
-.tabla-scroll-container::-webkit-scrollbar-thumb {
-  background-color: rgba(212, 175, 55, 0.3);
+
+.tabla-scroll-container::-webkit-scrollbar-track {
+  background: var(--bg-principal);
   border-radius: 10px;
 }
 
+.tabla-scroll-container::-webkit-scrollbar-thumb {
+  background-color: var(--color-dorado);
+  border-radius: 10px;
+}
 /* ===================================================
    RESPONSIVE DESIGN (S26 Ultra, iPhone Mini, Tablets)
    =================================================== */

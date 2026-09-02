@@ -585,9 +585,30 @@
   </div>
 </section>
 
-
-<!-- Librería SheetJS para leer el Excel de Google en tiempo real -->
+<!-- 1. LIBRERÍA NECESARIA (Asegúrate de tenerla antes del cierre de </body> o en el <head>) -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+
+<!-- ===================================================
+     COMPONENTE: BANNER COACHING FLC
+     =================================================== -->
+<section class="coachingFLC-container">
+  <div class="coachingFLC-info">
+    <span class="coachingFLC-tag">Análisis & Estrategia</span>
+    <h3 class="coachingFLC-titulo">
+      "La victoria en el mapa no es cuestión de suerte, sino de estrategia. Domina cada rotación."
+    </h3>
+    <p class="coachingFLC-texto">
+      Haz uso de la herramienta de análisis creada por el <strong>Coach Alex</strong> para seguir mejorando en tu estrategia...
+    </p>
+  </div>
+  <div class="coachingFLC-action">
+    <a href="TU_ENLACE_HERRAMIENTA_AQUI" target="_blank" class="coachingFLC-btn">
+      Abrir Herramienta 🎯
+    </a>
+  </div>
+</section>
+
 
 <!-- ===================================================
      COMPONENTE: CLASIFICACIÓN EN VIVO (clasificacionFLC)
@@ -614,17 +635,17 @@
     <!-- Bloque de la Tabla de Google Sheets (Derecha) -->
     <div class="clasificacionFLC-tabla-wrapper">
       <div class="tabla-scroll-container">
-        <!-- El JS inyectará la tabla de posiciones aquí -->
+        <!-- El JS inyectará la cabecera, los logos y los puntos aquí -->
         <table class="tabla-flc" id="tabla-puntos-web">
           <thead>
             <tr>
-              <th style="text-align: center; padding: 30px; color: var(--color-dorado, #D4AF37);">
+              <th style="text-align: center; padding: 25px; color: var(--color-dorado, #D4AF37);">
                 Sincronizando con Google Sheets...
               </th>
             </tr>
           </thead>
           <tbody>
-            <!-- Aquí se auto-generarán las filas con los equipos -->
+            <!-- Filas auto-generadas desde el Excel -->
           </tbody>
         </table>
       </div>
