@@ -1,665 +1,511 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>FN LEAGUE</title>
+    <title>FN LEAGUE | Official eSports Community</title>
     <link rel="icon" type="image/png" href="img/icono.PNG">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Fuentes eSports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Google Fonts: Playfair Display (Títulos) y Lato (Textos) -->
-     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;900&family=Montserrat:ital,wght@0,700;0,900;1,900&family=Permanent+Marker&display=swap" rel="stylesheet">
 </head>
 <body>
 
-   <!-- menu FLC -->
-<header class="menuFLC-header">
-  <nav class="menuFLC">
-    <!-- Logo y Botón de Tema juntos -->
-    <div class="menuFLC-logo">
-      <a href="#inicio">
-        <img src="img/icono.PNG" alt="Logo de MiMarca" class="menuFLC-logo-img">  
-      </a>
-      
-      <!-- Botón de cambio de tema al lado del logo -->
-      <button id="theme-toggle" class="btn-theme-toggle" aria-label="Cambiar modo">
-        <span id="theme-icon">🌙</span>
+  <!-- CAPA DE SOBREPOSICIÓN Y EFECTO DE FONDO URBANO -->
+  <div class="bg-overlay-dark"></div>
+
+  <!-- MARQUEE / MARQUESINA SUPERIOR -->
+  <div class="ticker-urban">
+    <div class="ticker-track">
+      <span>🔥 SOMOS FN • CADA KILL SE RESPETA • FN LEAGUE • DOMINA LA ZONA • TALENTO, DISCIPLINA Y GLORIA • NO TALK, JUST ACTION • </span>
+      <span>🔥 SOMOS FN • CADA KILL SE RESPETA • FN LEAGUE • DOMINA LA ZONA • TALENTO, DISCIPLINA Y GLORIA • NO TALK, JUST ACTION • </span>
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN PRINCIPAL -->
+  <header class="menuFLC-header">
+    <nav class="menuFLC">
+      <div class="menuFLC-logo">
+        <a href="#heroFLC">
+          <img src="img/icono.PNG" alt="Logo FN League" class="menuFLC-logo-img">  
+        </a>
+        <button id="theme-toggle" class="btn-theme-toggle" aria-label="Cambiar modo">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+
+      <button class="menuFLC-hamburger" aria-label="Abrir menú">
+        <span class="linea"></span>
+        <span class="linea"></span>
+        <span class="linea"></span>
       </button>
-    </div>
 
-    <button class="menuFLC-hamburger" aria-label="Abrir menú">
-      <span class="linea"></span>
-      <span class="linea"></span>
-      <span class="linea"></span>
-    </button>
+      <ul class="menuFLC-links">
+        <li><a href="#heroFLC">Inicio</a></li>
+        <li><a href="#nosotrosFLC">Nosotros</a></li>
+        <li><a href="#jornadasFLC">Jornadas</a></li>
+        <li><a href="#reglamento">Reglamento</a></li>
+        <li><a href="#clasificacion">Clasificación</a></li>
+        <li><a href="https://www.instagram.com/fn_esports_oficial?igsh=eG04a2kyYWY1bXN0" target="_blank" class="menuFLC-btn-contacto">FN INSTAGRAM</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- Enlaces -->
-    <ul class="menuFLC-links">
-      <li><a href="#heroFLC">Inicio</a></li>
-      <li><a href="#nosotrosFLC">Nosotros</a></li>
-      <li><a href="#jornadasFLC">Jornadas</a></li>
-      <li><a href="#reglamento">Reglamento</a></li>
-      <li><a href="#clasificacion">Clasificación</a></li>
-      <li><a href="https://www.instagram.com/fn_esports_oficial?igsh=eG04a2kyYWY1bXN0" target="_blank" class="menuFLC-btn-contacto">FN</a></li>
-    </ul>
-  </nav>
-</header>
- <!-- ===================================================
-     COMPONENTE: HERO SECTION (heroFLC)
-     =================================================== -->
-<section id="heroFLC" class="heroFLC revelar revelar-arriba">
-  <div class="heroFLC-container">
-    
-    <div class="heroFLC-image-wrapper">
-      <img src="img/logoFLC.PNG" alt="FN League Community Banner" class="heroFLC-img">
-    </div>
-
-    <div class="heroFLC-content-wrapper">
-      <span class="heroFLC-welcome">Bienvenidos a</span>
-      <h1 class="heroFLC-title">FN LEAGUE COMMUNITY</h1>
+  <!-- HERO SECTION CON EFECTO 3D TILT -->
+  <section id="heroFLC" class="heroFLC revelar revelar-arriba">
+    <div class="heroFLC-container">
       
-      <div class="heroFLC-typewriter-box">
-        <span class="heroFLC-label">SOMOS:</span>
-        <span class="heroFLC-dynamic-text" id="heroFLC-typewriter"></span>
-        <span class="heroFLC-cursor">|</span>
+      <!-- LADO IZQUIERDO: TARJETA 3D -->
+      <div class="heroFLC-image-wrapper">
+        <div class="heroFLC-card-3d" data-tilt>
+          <div class="card-3d-internal">
+            <img src="img/logoFLC.PNG" alt="FN League Banner" class="heroFLC-img">
+            <div class="card-street-tag">#FN_ESPORTS_LEGACY</div>
+          </div>
+        </div>
       </div>
-    </div>
 
-  </div>
-</section>
-
-
- <!-- ===================================================
-     COMPONENTE: NOSOTROS (nosotrosFLC)
-     =================================================== -->
-<section id="nosotrosFLC" class="nosotrosFLC revelar revelar-izquierda">
-  <div class="nosotrosFLC-container">
-    
-    <div class="nosotrosFLC-main-grid">
-      
-      <div class="nosotrosFLC-content">
-        <span class="nosotrosFLC-subtitle">Nuestra Esencia</span>
-        <h2 class="nosotrosFLC-title">QUIENES SOMOS</h2>
-        <div class="nosotrosFLC-divider"></div>
+      <!-- LADO DERECHO: CONTENIDO -->
+      <div class="heroFLC-content-wrapper">
+        <div class="urban-badge-pill">
+          <span class="glow-dot"></span> ORGANIZACIÓN OFICIAL
+        </div>
+        <span class="heroFLC-welcome">BIENVENIDOS AL IMPERIO</span>
+        <h1 class="heroFLC-title">FN LEAGUE <span class="highlight-street">COMMUNITY</span></h1>
         
-        <p class="nosotrosFLC-description">
-          En <strong>FN League Community</strong>, nos dedicamos a construir un ecosistema donde la pasión por el gaming y la alta competencia se fusionan. Nacimos con el firme propósito de crear un espacio donde cada jugador encuentre un entorno ideal para destacar, superarse y competir al más alto nivel.
+        <div class="heroFLC-typewriter-box">
+          <span class="heroFLC-label">AQUÍ SE MANDA:</span>
+          <span class="heroFLC-dynamic-text" id="heroFLC-typewriter"></span>
+          <span class="heroFLC-cursor">|</span>
+        </div>
+
+        <p class="hero-street-quote">
+          “El respeto no se pide en el lobby, se gana en el terreno de juego.”
         </p>
-        <p class="nosotrosFLC-description">
-          Nuestra trayectoria está marcada por la búsqueda constante de la excelencia, organizando torneos y dinámicas que no solo ponen a prueba la habilidad, sino que también fomentan valores como el respeto, la disciplina y el trabajo en equipo.
-        </p>
+
+        <div class="hero-cta-group">
+          <a href="#clasificacion" class="btn-urban-primary">VER TABLA EN VIVO</a>
+          <a href="#reglamento" class="btn-urban-outline">REGLAS DE JUEGO</a>
+        </div>
       </div>
 
-      <div class="nosotrosFLC-logo-area">
-        <img src="img/fnLogo.jpeg" alt="Logo FN League" class="nosotrosFLC-logo-img">
+    </div>
+  </section>
+
+  <!-- NOSOTROS SECTION -->
+  <section id="nosotrosFLC" class="nosotrosFLC revelar revelar-izquierda">
+    <div class="nosotrosFLC-container">
+      <div class="nosotrosFLC-main-grid">
+        <div class="nosotrosFLC-content">
+          <span class="nosotrosFLC-subtitle">CULTURA & COMPETENCIA</span>
+          <h2 class="nosotrosFLC-title">QUIÉNES SOMOS</h2>
+          <div class="nosotrosFLC-divider"></div>
+          
+          <p class="nosotrosFLC-description">
+            En <strong>FN League Community</strong> fusionamos el espíritu competitivo con la estructura ejecutiva de los eSports de élite. Nacimos de la competitividad pura: aquí no hay espacio para excusas, solo para escuadras dispuestas a dejar huella.
+          </p>
+          <p class="nosotrosFLC-description">
+            Creamos torneos con transmisiones, sistemas de puntuación automatizados y una comunidad sólida basada en respeto, disciplina y jerarquía.
+          </p>
+
+          <div class="urban-quote-card">
+            <span class="quote-tag">FILOSOFÍA FLC</span>
+            <p>“En la práctica aprendes a resistir; en la liga aprendes a dominar.”</p>
+          </div>
+        </div>
+
+        <div class="nosotrosFLC-logo-area">
+          <div class="logo-3d-frame" data-tilt>
+            <img src="img/fnLogo.jpeg" alt="Logo FN League" class="nosotrosFLC-logo-img">
+          </div>
+        </div>
       </div>
 
+      <div class="nosotrosFLC-quote-box">
+        <p class="nosotrosFLC-quote">
+          "EL DESEO DE TRIUNFAR DEBE SER MÁS GRANDE QUE EL MIEDO AL FRACASO"
+        </p>
+      </div>
     </div>
+  </section>
 
-    <div class="nosotrosFLC-quote-box">
-      <p class="nosotrosFLC-quote">
-        "EL DESEO DE TRIUNFAR DEBE SER MÁS GRANDE QUE EL MIEDO AL FRACASO"
-      </p>
+  <!-- BANNER TÁCTICO INTERMEDIO -->
+  <section class="banner-frase-urbana">
+    <div class="banner-frase-content">
+      <h3 class="graffiti-text">"CERO EXCUSAS • CERO LLANTOS • PURA ESTRATEGIA"</h3>
+      <p>Representa a tu clan, team o esport, defiende tu tag y sube al podio de la temporada.</p>
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- JORNADAS SECTION -->
+  <section id="jornadasFLC" class="jornadasFLC-section revelar revelar-derecha">
+    <div class="parent revelar revelar-arriba">
+      <div class="div1 jornadasFLC-title">
+        <h2>JORNADAS <span class="highlight-street">FN LEAGUE</span></h2>
+      </div>
 
+      <div class="div8 jornadasFLC-logo-top">
+        <img src="img/somosFN.PNG" alt="Somos FN">
+      </div>
+      <div class="div9 jornadasFLC-logo-top">
+        <img src="img/somosFN.PNG" alt="Somos FN">
+      </div>
 
-<!-- ===================================================
-     COMPONENTE: JORNADAS FN LEAGUE (jornadasFLC)
-     =================================================== -->
-<section id="jornadasFLC" class="jornadasFLC-section revelar revelar-derecha">
-  <div class="parent revelar revelar-arriba">
-    
-    <!-- Título Principal (div1) -->
-    <div class="div1 jornadasFLC-title">
-      <h2>JORNADAS FN LEAGUE</h2>
-    </div>
-
-    <!-- Logos Superiores (div8 y div9) -->
-    <div class="div8 jornadasFLC-logo-top">
-      <img src="img/somosFN.PNG" alt="Somos FN">
-    </div>
-    <div class="div9 jornadasFLC-logo-top">
-      <img src="img/somosFN.PNG" alt="Somos FN">
-    </div>
-
-    <!-- Tarjetas de los Días (div2 a div6) -->
-    <div class="div2 jornadasFLC-day">
-     
-      <a href="./JORNADAS/lunes/lunes.html">
-         <img src="./img/players/lunes.PNG" alt="Jornada Lunes" class="jornadasFLC-day-img">
-         <span>LUNES</span>
+      <div class="div2 jornadasFLC-day" data-tilt>
+        <a href="./JORNADAS/lunes/lunes.html">
+           <img src="./img/players/lunes.PNG" alt="Jornada Lunes" class="jornadasFLC-day-img">
+           <span>LUNES</span>
         </a>
-    </div>
-    <div class="div3 jornadasFLC-day">
-      <a href="./JORNADAS/martes/martes.html">
-         <img src="./img/players/martes.PNG" alt="Jornada Martes" class="jornadasFLC-day-img">
-         <span>MARTES</span>
+      </div>
+      <div class="div3 jornadasFLC-day" data-tilt>
+        <a href="./JORNADAS/martes/martes.html">
+           <img src="./img/players/martes.PNG" alt="Jornada Martes" class="jornadasFLC-day-img">
+           <span>MARTES</span>
         </a>
-    </div>
-    <div class="div4 jornadasFLC-day">
-      <a href="./JORNADAS/miercoles/miercoles.html">
-         <img src="./img/players/miercoles2.PNG" alt="Jornada Miércoles" class="jornadasFLC-day-img">
-         <span>MIÉRCOLES</span>
+      </div>
+      <div class="div4 jornadasFLC-day" data-tilt>
+        <a href="./JORNADAS/miercoles/miercoles.html">
+           <img src="./img/players/miercoles2.PNG" alt="Jornada Miércoles" class="jornadasFLC-day-img">
+           <span>MIÉRCOLES</span>
         </a>
-    </div>
-    <div class="div5 jornadasFLC-day">
-      <a href="./JORNADAS/jueves/jueves.html">
-         <img src="./img/players/luuJueves.PNG" alt="Jornada Jueves" class="jornadasFLC-day-img">
-         <span>JUEVES</span>
+      </div>
+      <div class="div5 jornadasFLC-day" data-tilt>
+        <a href="./JORNADAS/jueves/jueves.html">
+           <img src="./img/players/luuJueves.PNG" alt="Jornada Jueves" class="jornadasFLC-day-img">
+           <span>JUEVES</span>
         </a>  
-    </div>
-    <div class="div6 jornadasFLC-day">
-      <a href="./JORNADAS/viernes/viernes.html">
-         <img src="./img/players/viernesrsh.PNG" alt="Jornada Viernes" class="jornadasFLC-day-img">
-         <span>VIERNES</span>
+      </div>
+      <div class="div6 jornadasFLC-day" data-tilt>
+        <a href="./JORNADAS/viernes/viernes.html">
+           <img src="./img/players/viernesrsh.PNG" alt="Jornada Viernes" class="jornadasFLC-day-img">
+           <span>VIERNES</span>
         </a>
-    </div>
-
-    <!-- Banner Ganador del Día (div7) -->
-    <div class="div7 jornadasFLC-winner">
-      <!-- Si la imagen está vacía, se mostrará un elegante texto temporal -->
-      <img src="./img/ganador-placeholder.png" alt="Equipo ganador de jornada" class="winner-img">
-      <div class="winner-overlay">
-        <span>GANADOR DE LA JORNADA</span>
       </div>
-    </div>
 
-    <!-- Logos Inferiores (div10 y div11) -->
-    <div class="div10 jornadasFLC-logo-bottom">
-      <img src="img/fnLogo.jpeg" alt="FN Logo">
-    </div>
-    <div class="div11 jornadasFLC-logo-bottom">
-      <img src="img/logoFLC.PNG" alt="Logo FLC">
-    </div>
-
-  </div>
-</section>
-
-<!-- ===================================================
-     COMPONENTE: REGLAMENTO Y PUNTUACIONES (reglamentoFLC)
-     =================================================== -->
-<section class="reglamentoFLC-section" id="reglamento">
-  <div class="reglamentoFLC-container revelar revelar-arriba">
-    
-    <!-- Encabezado Principal -->
-    <div class="reglamentoFLC-header">
-      <span class="reglamentoFLC-subtitle">Normativa Oficial</span>
-      <h2 class="reglamentoFLC-title">REGLAMENTO FLC</h2>
-      <div class="reglamentoFLC-divider"></div>
-    </div>
-
-    <!-- Navegación por Días (Tabs) -->
-    <div class="reglamentoFLC-tabs">
-      <button class="tab-btn active" data-dia="lunes">LUNES</button>
-      <button class="tab-btn" data-dia="martes">MARTES</button>
-      <button class="tab-btn" data-dia="miercoles">MIÉRCOLES</button>
-      <button class="tab-btn" data-dia="jueves">JUEVES</button>
-      <button class="tab-btn" data-dia="viernes">VIERNES</button>
-    </div>
-
-    <!-- CONTENEDORES DE CONTENIDO -->
-    <div class="reglamentoFLC-content-wrapper">
-
-      <!-- ================= JORNADA LUNES ================= -->
-      <div class="dia-panel active" id="panel-lunes">
-        <div class="dia-grid">
-          
-          <!-- Columna Izquierda: Reglas y Restricciones -->
-          <div class="dia-reglas">
-            <h3 class="dia-seccion-title">FORMATO DE JUEGO</h3>
-            
-            <div class="regla-card regla-permitido">
-              <div class="regla-icon">✓</div>
-              <div class="regla-info">
-                <h4>ESTILO LIBRE</h4>
-                <p>En esta jornada de lunes se vale absolutamente todo. Usa tus mejores estrategias, armas y rutas para asegurar la victoria.</p>
-              </div>
-            </div>
-
-            <!-- Advertencia destacada en rojo sobre la lista de eliminación -->
-            <div class="regla-card regla-prohibido">
-              <div class="regla-icon">✕</div>
-              <div class="regla-info">
-                <h4>RESTRICCIÓN IMPORTANTE</h4>
-                <p>Queda estrictamente prohibida la <strong>lista de eliminación</strong>. Su uso conllevará penalizaciones severas para el equipo.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Columna Derecha: Tarjetas de Puntuación -->
-          <div class="dia-puntuacion">
-            <h3 class="dia-seccion-title">TABLA DE PUNTOS</h3>
-            
-            <div class="puntos-grid">
-              <!-- Top 1 (Destacado en Dorado) -->
-              <div class="punto-card top-oro">
-                <span class="puntos-top">TOP 1</span>
-                <span class="puntos-cantidad">15 PTS</span>
-              </div>
-              <!-- Top 2 (Destacado en Plata/Brillante) -->
-              <div class="punto-card top-plata">
-                <span class="puntos-top">TOP 2</span>
-                <span class="puntos-cantidad">10 PTS</span>
-              </div>
-              <!-- Tops en descendencia -->
-              <div class="punto-card">
-                <span class="puntos-top">TOP 3</span>
-                <span class="puntos-cantidad">9 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 4</span>
-                <span class="puntos-cantidad">8 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 5</span>
-                <span class="puntos-cantidad">7 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 6</span>
-                <span class="puntos-cantidad">6 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 7</span>
-                <span class="puntos-cantidad">5 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 8</span>
-                <span class="puntos-cantidad">4 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 9</span>
-                <span class="puntos-cantidad">3 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 10</span>
-                <span class="puntos-cantidad">2 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 11</span>
-                <span class="puntos-cantidad">1 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 12</span>
-                <span class="puntos-cantidad">1 PTS</span>
-              </div>
-            </div>
-
-          </div>
+      <div class="div7 jornadasFLC-winner" data-tilt>
+        <img src="./img/ganador-placeholder.png" alt="Ganador de la jornada" class="winner-img">
+        <div class="winner-overlay">
+          <span>👑 REYES DE LA JORNADA</span>
         </div>
       </div>
 
-      <!-- Puedes duplicar esta estructura para Miércoles, Jueves y Viernes -->
-       <!-- ================= JORNADA MARTES ================= -->
-      <div class="dia-panel" id="panel-martes">
-        <div class="dia-grid">
-          
-          <!-- Columna Izquierda: Reglas y Restricciones -->
-          <div class="dia-reglas">
-            <h3 class="dia-seccion-title">FORMATO: FRENESÍ DE KILLS</h3>
-            
-            <div class="regla-card regla-permitido">
-              <div class="regla-icon">✓</div>
-              <div class="regla-info">
-                <h4>TODO PERMITIDO</h4>
-                <p>Si el juego lo incluye de forma nativa, es completamente legal. Se vale usar cualquier arma, vehículo, habilidad, objeto o estrategia que brinde el mapa. ¡Sin restricciones de equipamiento!</p>
-              </div>
-            </div>
-
-            <!-- Alerta máxima en rojo para los Hacks -->
-            <div class="regla-card regla-prohibido">
-              <div class="regla-icon">✕</div>
-              <div class="regla-info">
-                <h4>PROHIBIDO EL USO DE HACKS</h4>
-                <p>Queda estrictamente prohibido el uso de <strong>hacks, scripts, macros, archivos alterados o cualquier software de terceros</strong>. Su uso causará descalificación inmediata del equipo y baneo permanente de la FLC.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Columna Derecha: Sistema de Puntuación Especial de Martes -->
-          <div class="dia-puntuacion">
-            <h3 class="dia-seccion-title">TABLA DE PUNTOS</h3>
-            
-            <div class="puntos-grid">
-              
-              <!-- Puntos por Top (Anulado en Rojo) -->
-              <div class="punto-card" style="border-color: rgba(155, 17, 30, 0.4); background: linear-gradient(135deg, #1a1a1a 0%, rgba(155, 17, 30, 0.05) 100%);">
-                <span class="puntos-top">PUNTOS DE TOP</span>
-                <span class="puntos-cantidad" style="color: var(--color-rojo, #9B111E);">0 PTS</span>
-              </div>
-              
-              <!-- Puntos por Kill (Destacado en Dorado) -->
-              <div class="punto-card top-oro">
-                <span class="puntos-top">CADA ELIMINACIÓN</span>
-                <!-- Te coloco '1 PTO' de ejemplo, puedes cambiarlo por el valor exacto de tu reglamento -->
-                <span class="puntos-cantidad">1 PTO</span>
-              </div>
-
-              <!-- Tarjeta de Enfoque de Jornada -->
-              <div class="punto-card">
-                <span class="puntos-top">ENFOQUE DEL DÍA</span>
-                <span class="puntos-cantidad" style="font-size: 1rem; color: #fff; margin-top: 5px;">¡PURA AGRESIVIDAD!</span>
-              </div>
-
-            </div>
-
-            <!-- Nota aclaratoria inferior para evitar confusiones en los jugadores -->
-            <p style="font-family: var(--fuente-textos, 'Lato', sans-serif); color: rgba(255, 255, 255, 0.4); font-size: 0.85rem; margin-top: 2rem; line-height: 1.5; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
-              * NOTA: En la jornada de martes el posicionamiento de supervivencia no otorga ningún punto. El puntaje final del equipo dependerá única y exclusivamente de las kills obtenidas.
-            </p>
-
-          </div>
-        </div>
+      <div class="div10 jornadasFLC-logo-bottom">
+        <img src="img/fnLogo.jpeg" alt="FN Logo">
       </div>
-
-
-      <!-- ================= JORNADA MIÉRCOLES ================= -->
-      <div class="dia-panel" id="panel-miercoles">
-        <div class="dia-grid">
-          
-          <!-- Columna Izquierda: Reglas y Restricciones -->
-          <div class="dia-reglas">
-            <h3 class="dia-seccion-title">FORMATO: COMPETENCIA TOTAL</h3>
-            
-            <div class="regla-card regla-permitido">
-              <div class="regla-icon">✓</div>
-              <div class="regla-info">
-                <h4>ESTILO LIBRE HÍBRIDO</h4>
-                <p>En esta jornada se vale absolutamente todo lo que el mapa y el juego ofrezcan. No hay restricciones de armamento ni de estrategias. ¡Despliega tu máximo potencial!</p>
-              </div>
-            </div>
-
-            <!-- Recordatorio del sistema híbrido -->
-            <div class="regla-card regla-permitido" style="border-left-color: var(--color-dorado, #D4AF37);">
-              <div class="regla-icon" style="background-color: rgba(212, 175, 55, 0.1); color: var(--color-dorado, #D4AF37);">★</div>
-              <div class="regla-info">
-                <h4>SISTEMA DE DOBLE PUNTUACIÓN</h4>
-                <p>Para ganar la jornada no basta solo con esconderse o solo con buscar kills de manera alocada. Deberás equilibrar tu juego: busca eliminaciones y asegura una buena posición en el Top.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Columna Derecha: Sistema de Puntuación (Top 1 al 12 Lineal) -->
-          <div class="dia-puntuacion">
-            <h3 class="dia-seccion-title">TABLA DE PUNTOS</h3>
-            
-            <div class="puntos-grid">
-              <!-- Top 1 (Destacado en Dorado) -->
-              <div class="punto-card top-oro">
-                <span class="puntos-top">TOP 1</span>
-                <span class="puntos-cantidad">12 PTS</span>
-              </div>
-              <!-- Top 2 (Destacado en Plata) -->
-              <div class="punto-card top-plata">
-                <span class="puntos-top">TOP 2</span>
-                <span class="puntos-cantidad">11 PTS</span>
-              </div>
-              <!-- Tops en descendencia lineal exacta -->
-              <div class="punto-card">
-                <span class="puntos-top">TOP 3</span>
-                <span class="puntos-cantidad">10 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 4</span>
-                <span class="puntos-cantidad">9 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 5</span>
-                <span class="puntos-cantidad">8 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 6</span>
-                <span class="puntos-cantidad">7 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 7</span>
-                <span class="puntos-cantidad">6 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 8</span>
-                <span class="puntos-cantidad">5 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 9</span>
-                <span class="puntos-cantidad">4 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 10</span>
-                <span class="puntos-cantidad">3 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 11</span>
-                <span class="puntos-cantidad">2 PTS</span>
-              </div>
-              <div class="punto-card">
-                <span class="puntos-top">TOP 12</span>
-                <span class="puntos-cantidad">1 PTS</span>
-              </div>
-            </div>
-
-            <!-- Recordatorio de Kills -->
-            <div class="punto-card" style="margin-top: 15px; border-color: var(--color-rojo, #9B111E); background: linear-gradient(135deg, #1a1a1a 0%, rgba(155, 17, 30, 0.1) 100%); flex-direction: row; justify-content: space-between; align-items: center; padding: 15px 20px;">
-              <span class="puntos-top" style="color: var(--color-blanco, #FFFFFF); font-size: 1rem; text-align: left;">CADA ELIMINACIÓN (KILL) OTORGA:</span>
-              <!-- Puedes cambiar '1 PTO' por el valor real si es diferente -->
-              <span class="puntos-cantidad" style="color: var(--color-rojo, #9B111E); font-size: 1.4rem;">+1 PTO</span>
-            </div>
-
-          </div>
-        </div>
+      <div class="div11 jornadasFLC-logo-bottom">
+        <img src="img/logoFLC.PNG" alt="Logo FLC">
       </div>
-
-
-      <!-- ================= JORNADA JUEVES ================= -->
-      <div class="dia-panel" id="panel-jueves">
-        <div class="dia-grid">
-          
-          <!-- Columna Izquierda: Reglas y Restricciones -->
-          <div class="dia-reglas">
-            <h3 class="dia-seccion-title">FORMATO: ELITE DE SUPERVIVENCIA</h3>
-            
-            <div class="regla-card regla-permitido" style="border-left-color: var(--color-dorado, #D4AF37);">
-              <div class="regla-icon" style="background-color: rgba(212, 175, 55, 0.1); color: var(--color-dorado, #D4AF37);">🏆</div>
-              <div class="regla-info">
-                <h4>SOLO EL PODIO SUMA</h4>
-                <p>La paciencia y el control del mapa son tus mejores aliados. En esta jornada, únicamente los tres mejores equipos que logren sobrevivir hasta el final de la partida se llevarán puntos a casa.</p>
-              </div>
-            </div>
-
-            <!-- Advertencia sobre las Kills -->
-            <div class="regla-card regla-prohibido">
-              <div class="regla-icon">✕</div>
-              <div class="regla-info">
-                <h4>CERO PUNTOS POR ELIMINACIÓN</h4>
-                <p>Las kills no tienen ningún valor hoy. Jugar de forma agresiva sin asegurar el top es una estrategia de alto riesgo. ¡Prioriza la vida de tu escuadra!</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Columna Derecha: Sistema de Puntuación Especial de Jueves -->
-          <div class="dia-puntuacion">
-            <h3 class="dia-seccion-title">TABLA DE PUNTOS</h3>
-            
-            <div class="puntos-grid">
-              
-              <!-- Top 1 (Destacado en Dorado) -->
-              <div class="punto-card top-oro">
-                <span class="puntos-top">TOP 1</span>
-                <span class="puntos-cantidad">15 PTS</span>
-              </div>
-              
-              <!-- Top 2 (Destacado en Plata) -->
-              <div class="punto-card top-plata">
-                <span class="puntos-top">TOP 2</span>
-                <span class="puntos-cantidad">10 PTS</span>
-              </div>
-
-              <!-- Top 3 (Destacado en Bronce/Cobre) -->
-              <div class="punto-card" style="border-color: #CD7F32; background: linear-gradient(135deg, #1a1a1a 0%, rgba(205, 127, 50, 0.1) 100%);">
-                <span class="puntos-top" style="color: #CD7F32;">TOP 3</span>
-                <span class="puntos-cantidad" style="color: #CD7F32;">5 PTS</span>
-              </div>
-
-            </div>
-
-            <!-- Fila para el resto de posiciones (Cero Puntos) -->
-            <div class="punto-card" style="margin-top: 15px; border-color: rgba(255,255,255,0.05); background-color: rgba(255, 255, 255, 0.02); flex-direction: row; justify-content: space-between; align-items: center; padding: 15px 20px;">
-              <span class="puntos-top" style="color: rgba(255, 255, 255, 0.4); font-size: 0.95rem; text-align: left; font-weight: bold;">DEL TOP 4 AL TOP 12:</span>
-              <span class="puntos-cantidad" style="color: rgba(255, 255, 255, 0.3); font-size: 1.2rem;">0 PTS</span>
-            </div>
-
-            <!-- Nota aclaratoria inferior -->
-            <p style="font-family: var(--fuente-textos, 'Lato', sans-serif); color: rgba(255, 255, 255, 0.4); font-size: 0.85rem; margin-top: 2rem; line-height: 1.5; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
-              * NOTA: Formato de supervivencia extrema. Cuidar la posición en zona y evitar peleas tempranas es clave, ya que quedar en 4° lugar otorga exactamente el mismo puntaje que quedar de último. En caso de empate en el Top 3, se definirá según el orden de eliminación del juego.
-            </p>
-
-          </div>
-        </div>
-      </div>
-
-
-      <!-- ================= JORNADA VIERNES ================= -->
-      <div class="dia-panel" id="panel-viernes">
-        <div class="dia-grid">
-          
-          <!-- Columna Izquierda: Reglas y Restricciones -->
-          <div class="dia-reglas">
-            <h3 class="dia-seccion-title">FORMATO: JORNADA DE REDENCIÓN</h3>
-            
-            <div class="regla-card regla-permitido" style="border-left-color: var(--color-rojo, #9B111E);">
-              <div class="regla-icon" style="background-color: rgba(155, 17, 30, 0.15); color: var(--color-rojo, #9B111E);">⚔</div>
-              <div class="regla-info">
-                <h4>FRENESÍ DE BAJAS DOBLES</h4>
-                <p>Es hora de cazar. Cada eliminación que consiga tu escuadra sumará el doble de lo habitual. Sal a buscar enfrentamientos desde el primer segundo.</p>
-              </div>
-            </div>
-
-            <!-- Explicación de la dinámica de recuperación -->
-            <div class="regla-card regla-permitido" style="border-left-color: var(--color-dorado, #D4AF37);">
-              <div class="regla-icon" style="background-color: rgba(212, 175, 55, 0.1); color: var(--color-dorado, #D4AF37);">⟲</div>
-              <div class="regla-info">
-                <h4>DÍA DE REMONTADA</h4>
-                <p>Diseñado especialmente para recuperar los puntos perdidos en la dura jornada del jueves. Si tu equipo fue eliminado temprano ayer, ¡hoy es el día de cobrar venganza en la tabla!</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Columna Derecha: Sistema de Puntuación Especial de Viernes -->
-          <div class="dia-puntuacion">
-            <h3 class="dia-seccion-title">TABLA DE PUNTOS</h3>
-            
-            <div class="puntos-grid">
-              
-              <!-- Puntos por Top (Anulado en Rojo) -->
-              <div class="punto-card" style="border-color: rgba(155, 17, 30, 0.4); background: linear-gradient(135deg, #1a1a1a 0%, rgba(155, 17, 30, 0.05) 100%);">
-                <span class="puntos-top">PUNTOS DE TOP</span>
-                <span class="puntos-cantidad" style="color: var(--color-rojo, #9B111E);">0 PTS</span>
-              </div>
-              
-              <!-- Kills Dobles (Destacado Gigante en Dorado/Rojo) -->
-              <div class="punto-card top-oro" style="grid-column: span 2; border-color: var(--color-rojo, #9B111E); background: linear-gradient(135deg, #1a1a1a 0%, rgba(155, 17, 30, 0.15) 100%);">
-                <span class="puntos-top" style="color: var(--color-dorado, #D4AF37); letter-spacing: 2px;">CADA ELIMINACIÓN (KILL)</span>
-                <span class="puntos-cantidad" style="color: var(--color-dorado, #D4AF37); font-size: 1.8rem;">+2 PUNTOS</span>
-              </div>
-
-            </div>
-
-            <!-- Mensaje motivador de cierre de semana -->
-            <div class="punto-card" style="margin-top: 15px; border-color: rgba(212, 175, 55, 0.2); background-color: rgba(212, 175, 55, 0.02); padding: 15px; text-align: center;">
-              <span class="puntos-top" style="color: #fff; font-size: 0.9rem; text-transform: uppercase;">¡EL TODO POR EL TODO EN EL CIERRE DE LA SEMANA!</span>
-            </div>
-
-            <!-- Nota aclaratoria inferior -->
-            <p style="font-family: var(--fuente-textos, 'Lato', sans-serif); color: rgba(255, 255, 255, 0.4); font-size: 0.85rem; margin-top: 1.5rem; line-height: 1.5; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
-              * NOTA: Al igual que el martes, la posición final de supervivencia no otorga puntos. El multiplicador de bajas dobles (x2) está activo para todas las partidas del día viernes. ¡La agresividad inteligente definirá al campeón semanal!
-            </p>
-
-          </div>
-        </div>
-      </div>
-
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- REGLAMENTO SECTION -->
+  <section class="reglamentoFLC-section" id="reglamento">
+    <div class="reglamentoFLC-container revelar revelar-arriba">
+      <div class="reglamentoFLC-header">
+        <span class="reglamentoFLC-subtitle">SISTEMA DE JUEGO & NORMATIVA</span>
+        <h2 class="reglamentoFLC-title">REGLAMENTO <span class="highlight-street">OFFICIAL</span></h2>
+        <div class="reglamentoFLC-divider"></div>
+        <p class="reglamento-top-quote">"Sin reglas no hay respeto; sin respeto no hay imperio."</p>
+      </div>
 
-<!-- 1. LIBRERÍA NECESARIA (Asegúrate de tenerla antes del cierre de </body> o en el <head>) -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+      <div class="reglamentoFLC-tabs">
+        <button class="tab-btn active" data-dia="lunes">LUNES</button>
+        <button class="tab-btn" data-dia="martes">MARTES</button>
+        <button class="tab-btn" data-dia="miercoles">MIÉRCOLES</button>
+        <button class="tab-btn" data-dia="jueves">JUEVES</button>
+        <button class="tab-btn" data-dia="viernes">VIERNES</button>
+      </div>
 
+      <div class="reglamentoFLC-content-wrapper">
+        <!-- LUNES -->
+        <div class="dia-panel active" id="panel-lunes">
+          <div class="dia-grid">
+            <div class="dia-reglas">
+              <h3 class="dia-seccion-title">FORMATO DE JUEGO</h3>
+              <div class="regla-card regla-permitido">
+                <div class="regla-icon">✓</div>
+                <div class="regla-info">
+                  <h4>ESTILO LIBRE</h4>
+                  <p>Apertura de semana total. Se vale cualquier armamento y rotación estratégica para asegurar la victoria.</p>
+                </div>
+              </div>
+              <div class="regla-card regla-prohibido">
+                <div class="regla-icon">✕</div>
+                <div class="regla-info">
+                  <h4>RESTRICCIÓN IMPORTANTE</h4>
+                  <p>Queda estrictamente prohibida la <strong>lista de eliminación</strong>. Su incumplimiento acarrea sanción directa.</p>
+                </div>
+              </div>
+            </div>
 
+            <div class="dia-puntuacion">
+              <h3 class="dia-seccion-title">SISTEMA DE PUNTOS</h3>
+              <div class="puntos-grid">
+                <div class="punto-card top-oro"><span class="puntos-top">TOP 1</span><span class="puntos-cantidad">15 PTS</span></div>
+                <div class="punto-card top-plata"><span class="puntos-top">TOP 2</span><span class="puntos-cantidad">10 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 3</span><span class="puntos-cantidad">9 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 4</span><span class="puntos-cantidad">8 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 5</span><span class="puntos-cantidad">7 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 6</span><span class="puntos-cantidad">6 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 7</span><span class="puntos-cantidad">5 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 8</span><span class="puntos-cantidad">4 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 9</span><span class="puntos-cantidad">3 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 10</span><span class="puntos-cantidad">2 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 11</span><span class="puntos-cantidad">1 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 12</span><span class="puntos-cantidad">1 PTS</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- MARTES -->
+        <div class="dia-panel" id="panel-martes">
+          <div class="dia-grid">
+            <div class="dia-reglas">
+              <h3 class="dia-seccion-title">FORMATO: FRENESÍ DE KILLS</h3>
+              <div class="regla-card regla-permitido">
+                <div class="regla-icon">✓</div>
+                <div class="regla-info">
+                  <h4>TODO PERMITIDO</h4>
+                  <p>Vehículos, armas y equipamiento nativo habilitados al 100%. Sal a cazar sin frenos.</p>
+                </div>
+              </div>
+              <div class="regla-card regla-prohibido">
+                <div class="regla-icon">✕</div>
+                <div class="regla-info">
+                  <h4>CERO TOLERANCIA A HACKS</h4>
+                  <p>Macros, scripts o programas de terceros significan baneo permanente de la comunidad.</p>
+                </div>
+              </div>
+            </div>
+            <div class="dia-puntuacion">
+              <h3 class="dia-seccion-title">SISTEMA DE PUNTOS</h3>
+              <div class="puntos-grid">
+                <div class="punto-card punto-desactivado">
+                  <span class="puntos-top">PUNTOS DE TOP</span>
+                  <span class="puntos-cantidad highlight-red">0 PTS</span>
+                </div>
+                <div class="punto-card top-oro">
+                  <span class="puntos-top">CADA KILL</span>
+                  <span class="puntos-cantidad">+1 PTO</span>
+                </div>
+                <div class="punto-card">
+                  <span class="puntos-top">ESTILO DE JUEGO</span>
+                  <span class="puntos-cantidad highlight-street">PURE AGGRESSION</span>
+                </div>
+              </div>
+              <p class="nota-reglamento">* El posicionamiento no otorga puntos este día. Cada baja cuenta como oro.</p>
+            </div>
+          </div>
+        </div>
 
+        <!-- MIÉRCOLES -->
+        <div class="dia-panel" id="panel-miercoles">
+          <div class="dia-grid">
+            <div class="dia-reglas">
+              <h3 class="dia-seccion-title">FORMATO: COMPETENCIA TOTAL</h3>
+              <div class="regla-card regla-permitido">
+                <div class="regla-icon">✓</div>
+                <div class="regla-info">
+                  <h4>ESTILO LIBRE HÍBRIDO</h4>
+                  <p>Equilibrio perfecto entre rotación limpia y eliminaciones agresivas.</p>
+                </div>
+              </div>
+            </div>
+            <div class="dia-puntuacion">
+              <h3 class="dia-seccion-title">SISTEMA DE PUNTOS</h3>
+              <div class="puntos-grid">
+                <div class="punto-card top-oro"><span class="puntos-top">TOP 1</span><span class="puntos-cantidad">12 PTS</span></div>
+                <div class="punto-card top-plata"><span class="puntos-top">TOP 2</span><span class="puntos-cantidad">11 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 3</span><span class="puntos-cantidad">10 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 4</span><span class="puntos-cantidad">9 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 5</span><span class="puntos-cantidad">8 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 6</span><span class="puntos-cantidad">7 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 7</span><span class="puntos-cantidad">6 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 8</span><span class="puntos-cantidad">5 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 9</span><span class="puntos-cantidad">4 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 10</span><span class="puntos-cantidad">3 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 11</span><span class="puntos-cantidad">2 PTS</span></div>
+                <div class="punto-card"><span class="puntos-top">TOP 12</span><span class="puntos-cantidad">1 PTS</span></div>
+              </div>
+              <div class="punto-banner-kill">
+                <span>CADA ELIMINACIÓN (KILL) OTORGA:</span>
+                <strong class="highlight-gold">+1 PTO</strong>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<!-- ===================================================
-     COMPONENTE: CLASIFICACIÓN EN VIVO (clasificacionFLC)
-     =================================================== -->
-<section class="clasificacionFLC-section" id="clasificacion">
-  <div class="clasificacionFLC-container">
-    
-    <!-- Bloque de Información (Izquierda) -->
-    <div class="clasificacionFLC-info">
-      <span class="clasificacionFLC-tag">Clasificación en Vivo</span>
-      <h2 class="clasificacionFLC-title">PUNTUACIONES s2 <br><span class="text-dorado">FN LEAGUE</span></h2>
-      <div class="clasificacionFLC-divider"></div>
+        <!-- JUEVES -->
+        <div class="dia-panel" id="panel-jueves">
+          <div class="dia-grid">
+            <div class="dia-reglas">
+              <h3 class="dia-seccion-title">FORMATO: ÉLITE DE SUPERVIVENCIA</h3>
+              <div class="regla-card regla-destacada">
+                <div class="regla-icon">🏆</div>
+                <div class="regla-info">
+                  <h4>SOLO EL PODIO SUMA</h4>
+                  <p>Juego táctico de zona. Solo los 3 equipos sobrevivientes acumulan puntos.</p>
+                </div>
+              </div>
+              <div class="regla-card regla-prohibido">
+                <div class="regla-icon">✕</div>
+                <div class="regla-info">
+                  <h4>CERO PUNTOS POR KILL</h4>
+                  <p>Las eliminaciones no otorgan puntaje. Protege la vida de tu escuadra.</p>
+                </div>
+              </div>
+            </div>
+            <div class="dia-puntuacion">
+              <h3 class="dia-seccion-title">SISTEMA DE PUNTOS</h3>
+              <div class="puntos-grid">
+                <div class="punto-card top-oro"><span class="puntos-top">TOP 1</span><span class="puntos-cantidad">15 PTS</span></div>
+                <div class="punto-card top-plata"><span class="puntos-top">TOP 2</span><span class="puntos-cantidad">10 PTS</span></div>
+                <div class="punto-card top-bronce"><span class="puntos-top">TOP 3</span><span class="puntos-cantidad">5 PTS</span></div>
+              </div>
+              <div class="punto-banner-kill">
+                <span>DEL TOP 4 AL TOP 12:</span>
+                <strong class="text-muted">0 PTS</strong>
+              </div>
+              <p class="nota-reglamento">* Del 4° al 12° lugar obtienen exactamente 0 puntos. Máxima tensión en zona final.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIERNES -->
+        <div class="dia-panel" id="panel-viernes">
+          <div class="dia-grid">
+            <div class="dia-reglas">
+              <h3 class="dia-seccion-title">FORMATO: JORNADA DE REDENCIÓN</h3>
+              <div class="regla-card regla-prohibido">
+                <div class="regla-icon">⚔</div>
+                <div class="regla-info">
+                  <h4>BAJAS DOBLES (x2)</h4>
+                  <p>Cierre de semana implacable. Cada baja computa el doble de puntos.</p>
+                </div>
+              </div>
+            </div>
+            <div class="dia-puntuacion">
+              <h3 class="dia-seccion-title">SISTEMA DE PUNTOS</h3>
+              <div class="puntos-grid">
+                <div class="punto-card punto-desactivado">
+                  <span class="puntos-top">PUNTOS DE TOP</span>
+                  <span class="puntos-cantidad highlight-red">0 PTS</span>
+                </div>
+                <div class="punto-card top-oro" style="grid-column: span 2;">
+                  <span class="puntos-top">CADA KILL REGISTRADA</span>
+                  <span class="puntos-cantidad highlight-gold">+2 PUNTOS</span>
+                </div>
+              </div>
+              <p class="nota-reglamento">* Multiplicador x2 activo. La agresividad inteligente define al campeón de la semana.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       CLASIFICACIÓN EN VIVO (TEXTO CENTRADO ARRIBA / TABLA ABAJO)
+       =================================================== -->
+  <section class="clasificacionFLC-section" id="clasificacion">
+    <div class="clasificacionFLC-container">
       
-      <!-- Frase Motivacional -->
-      <blockquote class="clasificacionFLC-quote">
-        <p>“El éxito es la suma de pequeños esfuerzos, repetidos día tras día”</p>
-      </blockquote>
-      
-      <p class="clasificacionFLC-desc">
-        Nuestra tabla general se sincroniza en tiempo real con la base de datos oficial. Cada kill conseguida y cada top alcanzado te acercan más a la gloria semanal.
+      <!-- BLOQUE DE TEXTO SUPERIOR -->
+      <div class="clasificacionFLC-info">
+        <div class="live-badge">
+          <span class="pulse-dot"></span> TRANSMISIÓN EN VIVO & SYNC
+        </div>
+        <span class="clasificacionFLC-tag">TABLA OFICIAL DE POSICIONES</span>
+        <h2 class="clasificacionFLC-title">RANKING GENERAL <br><span class="highlight-street">FN LEAGUE SEASON 2</span></h2>
+        <div class="clasificacionFLC-divider"></div>
+        
+        <blockquote class="clasificacionFLC-quote">
+          <p>“El verdadero campeón no busca gloria fácil; busca rivales que lo obliguen a superarse.”</p>
+        </blockquote>
+        
+        <p class="clasificacionFLC-desc">
+          Nuestra base de datos oficial procesa en vivo cada kill y cada top alcanzado por las escuadras. Revisa el leaderboard actualizado al instante.
+        </p>
+      </div>
+
+      <!-- TABLA OFICIAL ABAJO DE ANCHO COMPLETO -->
+      <div class="clasificacionFLC-tabla-wrapper">
+        <div class="tabla-header-bar">
+          <span class="tabla-title-text">👑 STANDINGS OFICIALES EN TIEMPO REAL</span>
+          <span class="tabla-status-pill">Sincronizado con Sheets</span>
+        </div>
+
+        <div class="tabla-scroll-container">
+          <table class="tabla-flc" id="tabla-puntos-web">
+            <thead>
+              <tr>
+                <th style="text-align: center; padding: 25px; color: var(--color-dorado);">
+                  Sincronizando tabla de posiciones...
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Se inyecta dinámicamente mediante JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BANNER FRASES EN GRID DE IMPACTO -->
+  <section class="urban-phrases-grid">
+    <div class="phrase-card">
+      <span class="phrase-num">01</span>
+      <h4>DISCIPLINA</h4>
+      <p>"Las batallas se ganan en el entrenamiento; en la partida solo se recoge la victoria."</p>
+    </div>
+    <div class="phrase-card">
+      <span class="phrase-num">02</span>
+      <h4>LEALTAD</h4>
+      <p>"Tu escuadra es tu familia en el mapa. Cubre la espalda o cae en el intento."</p>
+    </div>
+    <div class="phrase-card">
+      <span class="phrase-num">03</span>
+      <h4>HONOR</h4>
+      <p>"Ganar sin nivel no sirve de nada. Juega limpio, impacta fuerte y deja tu firma."</p>
+    </div>
+  </section>
+
+  <!-- BANNER COACHING ESTRATÉGICO -->
+  <section class="coachingFLC-container">
+    <div class="coachingFLC-info">
+      <span class="coachingFLC-tag">ANÁLISIS TÁCTICO & COACHING</span>
+      <h3 class="coachingFLC-titulo">
+        "La suerte no existe en torneos competitivos: existen mapas estudiados y rotaciones perfectas."
+      </h3>
+      <p class="coachingFLC-texto">
+        Aprovecha el software táctico desarrollado por el <strong>Coach Alex</strong> para planificar zonas de caída, patrones de rotación y lectura de mapa.
       </p>
     </div>
-
-    <!-- Bloque de la Tabla de Google Sheets (Derecha) -->
-    <div class="clasificacionFLC-tabla-wrapper">
-      <div class="tabla-scroll-container">
-        <!-- El JS inyectará la cabecera, los logos y los puntos aquí -->
-        <table class="tabla-flc" id="tabla-puntos-web">
-          <thead>
-            <tr>
-              <th style="text-align: center; padding: 25px; color: var(--color-dorado, #D4AF37);">
-                Sincronizando con Google Sheets...
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Filas auto-generadas desde el Excel -->
-          </tbody>
-        </table>
-      </div>
+    <div class="coachingFLC-action">
+      <a href="./coaching/coaching.html" target="_blank" class="coachingFLC-btn">
+        ABRIR PANEL TÁCTICO 🎯
+      </a>
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- FOOTER URBANO CON FRASE FINAL -->
+  <footer class="footer-urban">
+    <div class="footer-content">
+      <img src="img/icono.PNG" alt="FN Icon" class="footer-logo">
+      <p class="footer-tagline">FN LEAGUE COMMUNITY © 2026 • ALL RIGHTS RESERVED</p>
+      <p class="footer-quote">“DE LA COMUNIDAD PARA EL MUNDO • DOMINIO TOTAL EN ESPORTS”</p>
+    </div>
+  </footer>
 
-<!-- COMPONENTE: BANNER COACHING FLC -->
-<section class="coachingFLC-container">
-  
-  <!-- Columna Izquierda: Frase Táctica y Texto -->
-  <div class="coachingFLC-info">
-    <span class="coachingFLC-tag">Análisis & Estrategia</span>
-    <h3 class="coachingFLC-titulo">
-      "La victoria en el mapa no es cuestión de suerte, sino de estrategia. Domina cada rotación."
-    </h3>
-    <p class="coachingFLC-texto">
-      Haz uso de la herramienta de análisis creada por el <strong>Coach Alex</strong> para seguir mejorando en tu estrategia...
-    </p>
-  </div>
-
-  <!-- Columna Derecha: Botón de Redirección -->
-  <div class="coachingFLC-action">
-    <a href="./coaching/coaching.html" target="_blank" class="coachingFLC-btn">
-      Abrir Herramienta 🎯
-    </a>
-  </div>
-
-</section>
-
-    
-<script src="script.js"></script>
+  <!-- Librerías JS -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
