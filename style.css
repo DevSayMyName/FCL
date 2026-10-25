@@ -1139,3 +1139,204 @@ h1, h2, h3, h4 {
     text-align: center;
   }
 }
+
+
+
+
+/* codigo de fuentes de estilo para web organizacion invitacional flc */
+/* ===================================================
+   COMPONENTE: PERFILES FLC (perfilesFLC)
+   =================================================== */
+
+.perfilesFLC-section {
+  background-color: var(--bg-principal, #0e0e0e);
+  padding: 5rem 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.perfilesFLC-container {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Encabezado */
+.perfilesFLC-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.perfilesFLC-tag {
+  font-family: var(--fuente-textos);
+  color: var(--color-rojo, #9B111E);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.perfilesFLC-title {
+  font-family: var(--fuente-titulos);
+  color: var(--texto-principal, #ffffff);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+}
+
+.perfilesFLC-divider {
+  width: 60px;
+  height: 3px;
+  background-color: var(--color-dorado, #D4AF37);
+}
+
+/* Grid de Tarjetas */
+.perfilesFLC-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.perfilesFLC-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--color-dorado, #D4AF37);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 3rem;
+}
+
+/* Estilo de Tarjeta Individual */
+.perfilFLC-card {
+  background-color: var(--bg-tarjeta, #181818);
+  border: 1px solid var(--borde-tarjeta, rgba(212, 175, 55, 0.2));
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.perfilFLC-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-dorado, #D4AF37), var(--color-rojo, #9B111E));
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.perfilFLC-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-dorado, #D4AF37);
+  box-shadow: 0 15px 35px rgba(212, 175, 55, 0.15);
+}
+
+.perfilFLC-card:hover::before {
+  opacity: 1;
+}
+
+/* Contenedor del Logo / Foto */
+.perfilFLC-logo-wrapper {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid var(--color-dorado, #D4AF37);
+  padding: 4px;
+  background-color: var(--bg-principal, #0e0e0e);
+  margin-bottom: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.perfilFLC-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Texto y Biografía */
+.perfilFLC-nombre {
+  font-family: var(--fuente-titulos);
+  color: var(--texto-principal, #ffffff);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.perfilFLC-bio {
+  font-family: var(--fuente-textos);
+  color: var(--texto-secundario, #cccccc);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex-grow: 1; /* Empuja las redes sociales hacia abajo si hay bios de distinto largo */
+}
+
+/* Enlaces a Redes Sociales */
+.perfilFLC-socials {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.perfilFLC-social-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #242424;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.perfilFLC-social-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.perfilFLC-social-btn:hover {
+  background-color: var(--color-dorado, #D4AF37);
+  color: #121212;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Responsive */
+@media screen and (max-width: 576px) {
+  .perfilesFLC-section {
+    padding: 3.5rem 1rem;
+  }
+  .perfilesFLC-grid {
+    grid-template-columns: 1fr;
+  }
+}
