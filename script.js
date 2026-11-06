@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // 2. EFECTO DE ESCRIBIR HERO
 // ==========================================
 (function() {
-  const palabras = ["RESPETO Y COMPROMISO", "EXCELENCIA COMPETITIVA", "CULTURA URBAN ESPORTS", "FN LEAGUE S2"];
+  const palabras = ["RESPETO Y COMPROMISO", "EXCELENCIA COMPETITIVA", "FN ESPORTS", "FN LEAGUE", "#SOMOS FN"];
   let palabraIndex = 0;
   let caracterIndex = 0;
   let estaBorrando = false;
