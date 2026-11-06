@@ -143,14 +143,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==========================================
-// 6. SINCRONIZACIÓN DE GOOGLE SHEETS & PODIOS
+// 6. SINCRONIZACIÓN GOOGLE SHEETS (TOP 1, TABLA Y GANADORES AUTOMÁTICOS)
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1vEbJm85_5iIOEcU26GtWt_cvi0gnfM52IzfTMPAqVtI/export?format=xlsx"; 
   const LOGO_POR_DEFECTO = "img/icono.PNG";
+  const BANNER_ROSTER_DEFECTO = "img/logoFLC.PNG";
 
   const tablaCuerpo = document.querySelector("#tabla-puntos-web tbody");
   const tablaCabecera = document.querySelector("#tabla-puntos-web thead");
+  const top1Container = document.getElementById("top1-showcase-container");
 
   if (!tablaCuerpo || !tablaCabecera) return;
 
@@ -168,14 +170,118 @@ document.addEventListener("DOMContentLoaded", () => {
       
       const filas = XLSX.utils.sheet_to_json(hoja); 
 
-      if (filas.length === 0) {
+      if (!filas || filas.length === 0) {
         throw new Error("El documento no contiene datos.");
       }
 
-      const todasLasColumnas = Object.keys(filas[0]);
-      const columnasVisibles = todasLasColumnas.filter(col => col.toUpperCase() !== 'LOGO');
+      // ----------------------------------------------------
+      // A. RENDERIZADO DEL TOP 1 (ROSTER Y REYES DE LA JORNADA)
+      // ----------------------------------------------------
+      const top1 = filas[0];
+      const logoTop1 = (top1.LOGO && String(top1.LOGO).trim() !== "") ? top1.LOGO : LOGO_POR_DEFECTO;
+      const rosterTop1 = (top1.FOTO_ROSTER && String(top1.FOTO_ROSTER).trim() !== "") ? top1.FOTO_ROSTER : logoTop1;
+      const nombreTop1 = top1.EQUIPO || "Líder de la Liga";
+      const totalTop1 = top1.TOTAL !== undefined ? top1.TOTAL : 0;
+      const posTop1 = top1.POS || "1";
 
-      // 1. Cabeceras
+      // 1. Roster Showcase (Top 1)
+      if (top1Container) {
+        top1Container.innerHTML = `
+          <div class="top1-card" data-tilt>
+            <div class="top1-badge">👑 1ST PLACE • LÍDER</div>
+            <div class="top1-roster-img-wrapper">
+              <img src="${rosterTop1}" alt="${nombreTop1} Roster" class="top1-roster-img" onerror="this.src='${BANNER_ROSTER_DEFECTO}';">
+              <div class="top1-roster-overlay"></div>
+            </div>
+            <div class="top1-details">
+              <div class="top1-header-info">
+                <img src="${logoTop1}" alt="${nombreTop1}" class="top1-team-logo" onerror="this.src='${LOGO_POR_DEFECTO}';">
+                <div class="top1-title-group">
+                  <span class="top1-sub">LÍDER DE LA SEMANA</span>
+                  <h3 class="top1-team-name">${nombreTop1}</h3>
+                </div>
+              </div>
+              <div class="top1-stats-grid">
+                <div class="top1-stat-item">
+                  <span class="top1-stat-label">RANKING</span>
+                  <span class="top1-stat-value">#${posTop1}</span>
+                </div>
+                <div class="top1-stat-item">
+                  <span class="top1-stat-label">PUNTOS TOTALES</span>
+                  <span class="top1-stat-value">${totalTop1} PTS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. Reyes de la Jornada / Campeón Automático
+      const winnerImg = document.getElementById("winner-img");
+      const winnerTeamName = document.getElementById("winner-team-name");
+      const winnerTag = document.getElementById("winner-tag");
+
+      if (winnerImg && winnerTeamName) {
+        winnerImg.src = logoTop1;
+        winnerTeamName.textContent = nombreTop1;
+
+        const hoy = new Date().getDay();
+        if (winnerTag) {
+          winnerTag.textContent = (hoy === 6) ? "👑 CAMPEÓN DE LA SEMANA" : "👑 REYES DE LA JORNADA";
+        }
+      }
+
+      // ----------------------------------------------------
+      // B. GANADORES DE CADA JORNADA DIARIA (LUNES A VIERNES)
+      // ----------------------------------------------------
+      const diasSemana = [
+        { id: "img-jornada-lunes", claves: ["LUNES", "lunes"] },
+        { id: "img-jornada-martes", claves: ["MARTES", "martes"] },
+        { id: "img-jornada-miercoles", claves: ["MIERCOLES", "MIÉRCOLES", "miercoles", "miércoles"] },
+        { id: "img-jornada-jueves", claves: ["JUEVES", "jueves"] },
+        { id: "img-jornada-viernes", claves: ["VIERNES", "viernes"] }
+      ];
+
+      diasSemana.forEach(dia => {
+        const imgElem = document.getElementById(dia.id);
+        if (!imgElem) return;
+
+        let claveEncontrada = dia.claves.find(k => k in filas[0]);
+
+        if (claveEncontrada) {
+          let maxPuntos = -1;
+          let ganadoresDelDia = [];
+
+          filas.forEach(fila => {
+            const pts = parseFloat(fila[claveEncontrada]) || 0;
+            if (pts > maxPuntos) {
+              maxPuntos = pts;
+              ganadoresDelDia = [fila];
+            } else if (pts === maxPuntos && pts > 0) {
+              ganadoresDelDia.push(fila);
+            }
+          });
+
+          if (maxPuntos > 0 && ganadoresDelDia.length > 0) {
+            const liderDia = ganadoresDelDia[0];
+            const logoLider = (liderDia.LOGO && String(liderDia.LOGO).trim() !== "") ? liderDia.LOGO : null;
+            if (logoLider) {
+              imgElem.src = logoLider;
+            }
+          }
+        }
+      });
+
+      // ----------------------------------------------------
+      // C. RENDERIZADO DE TABLA GENERAL (DESDE EL TOP 2 EN ADELANTE)
+      // ----------------------------------------------------
+      const filasTabla = filas.length > 1 ? filas.slice(1) : [];
+      const todasLasColumnas = Object.keys(filas[0]);
+      const columnasVisibles = todasLasColumnas.filter(col => {
+        const colUpper = col.toUpperCase();
+        return colUpper !== 'LOGO' && colUpper !== 'FOTO_ROSTER' && colUpper !== 'ROSTER_IMG';
+      });
+
       let cabeceraHTML = "<tr>";
       columnasVisibles.forEach(col => {
         const alignStyle = col.toUpperCase() === 'EQUIPO' ? 'style="text-align: left;"' : 'style="text-align: center;"';
@@ -184,23 +290,26 @@ document.addEventListener("DOMContentLoaded", () => {
       cabeceraHTML += "</tr>";
       tablaCabecera.innerHTML = cabeceraHTML;
 
-      // 2. Filas + Badges de Podio 3D
+      if (filasTabla.length === 0) {
+        tablaCuerpo.innerHTML = `<tr><td colspan="${columnasVisibles.length}" style="text-align:center; padding:20px;">Esperando más competidores...</td></tr>`;
+        return;
+      }
+
       let filasHTML = "";
-      filas.forEach((fila, index) => {
+      filasTabla.forEach((fila, index) => {
+        const posicionReal = index + 2;
         let clasePodio = "";
         let badgePodio = "";
 
-        if (index === 0) {
-          clasePodio = "primer-lugar";
-          badgePodio = `<span class="rank-badge rank-1">1</span>`;
-        } else if (index === 1) {
+        if (posicionReal === 2) {
           clasePodio = "segundo-lugar";
           badgePodio = `<span class="rank-badge rank-2">2</span>`;
-        } else if (index === 2) {
+        } else if (posicionReal === 3) {
           clasePodio = "tercer-lugar";
           badgePodio = `<span class="rank-badge rank-3">3</span>`;
         } else {
-          badgePodio = `<span class="rank-badge rank-normal">${index + 1}</span>`;
+          const numPos = fila.POS || posicionReal;
+          badgePodio = `<span class="rank-badge rank-normal">${numPos}</span>`;
         }
 
         filasHTML += `<tr class="${clasePodio}">`;
@@ -214,9 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           if (colNombre === "EQUIPO") {
-            const urlLogo = (fila.LOGO && String(fila.LOGO).trim() !== "") 
-              ? fila.LOGO 
-              : LOGO_POR_DEFECTO;
+            const urlLogo = (fila.LOGO && String(fila.LOGO).trim() !== "") ? fila.LOGO : LOGO_POR_DEFECTO;
 
             valor = `
               <div class="equipo-cell">
@@ -242,55 +349,22 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => {
       console.error("Error al sincronizar datos:", error);
-      tablaCabecera.innerHTML = "";
-      tablaCuerpo.innerHTML = `
-        <tr>
-          <td colspan="10" style="text-align: center; color: var(--color-rojo-brillante); padding: 30px; font-weight: bold;">
-            ⚠️ Error de sincronización. Asegúrate de que el documento de Google Sheets sea público y contenga la columna 'LOGO'.
-          </td>
-        </tr>`;
+      if (top1Container) {
+        top1Container.innerHTML = `<div class="top1-loading" style="color:var(--color-rojo-brillante);">⚠️ Error al cargar la información</div>`;
+      }
     });
 });
 
 // ==========================================
-// 7. CONTROLADOR MODO CLARO / OSCURO
+// 7. CONSUMO DE HOJA DE INTEGRANTES / PERFILES FLC
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-  const btnTheme = document.getElementById('theme-toggle');
-  const iconTheme = document.getElementById('theme-icon');
-
-  const temaGuardado = localStorage.getItem('tema_flc') || 'dark';
-  document.documentElement.setAttribute('data-theme', temaGuardado);
-  if (iconTheme) iconTheme.textContent = temaGuardado === 'light' ? '☀️' : '🌙';
-
-  if (btnTheme) {
-    btnTheme.addEventListener('click', () => {
-      const temaActual = document.documentElement.getAttribute('data-theme');
-      const nuevoTema = temaActual === 'light' ? 'dark' : 'light';
-
-      document.documentElement.setAttribute('data-theme', nuevoTema);
-      localStorage.setItem('tema_flc', nuevoTema);
-      if (iconTheme) iconTheme.textContent = nuevoTema === 'light' ? '☀️' : '🌙';
-    });
-  }
-});
-
-
-
-//fuente de consumo de archivo xls teletr
-// ===================================================
-// CONSUMO DE HOJA DE INTEGRANTES / PERFILES FLC
-// ===================================================
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Enlace directo de exportación XLSX de tu Google Sheet
   const GOOGLE_SHEET_PERFILES_URL = "https://docs.google.com/spreadsheets/d/1HAdmJYUlcGmJZ0Zny76b5tpZaPRpi2BraPHalbQTsSs/export?format=xlsx";
   const LOGO_DEFECTO = "https://via.placeholder.com/90/D4AF37/121212?text=FLC";
 
   const contenedor = document.getElementById("contenedor-perfiles-flc");
   if (!contenedor) return;
 
-  // Iconos SVG Integrados para Redes Sociales
   const ICONOS_SVG = {
     tiktok: `<svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-1.42V8.92a6.34 6.34 0 0 0-3.52 1.07 6.33 6.33 0 1 0 9.86 5.26V9.18a8.21 8.21 0 0 0 4.77 1.52V7.2a4.85 4.85 0 0 1-1.04-.51z"/></svg>`,
     instagram: `<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`,
@@ -321,31 +395,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const logo = (persona.LOGO && String(persona.LOGO).trim() !== "") ? persona.LOGO : LOGO_DEFECTO;
         const bio = persona.BIOGRAFIA || "Miembro oficial de FLC Esports.";
 
-        // Procesar Redes Sociales
         let redesHTML = "";
 
-        // TikTok
         if (persona.TIKTOK && String(persona.TIKTOK).trim() !== "") {
           const url = persona.TIKTOK.startsWith("http") ? persona.TIKTOK : `https://www.tiktok.com/@${persona.TIKTOK.replace('@', '')}`;
           redesHTML += `<a href="${url}" target="_blank" rel="noopener" class="perfilFLC-social-btn" title="TikTok">${ICONOS_SVG.tiktok}</a>`;
         }
 
-        // Instagram
         if (persona.INSTAGRAM && String(persona.INSTAGRAM).trim() !== "") {
           const url = persona.INSTAGRAM.startsWith("http") ? persona.INSTAGRAM : `https://www.instagram.com/${persona.INSTAGRAM.replace('@', '')}`;
           redesHTML += `<a href="${url}" target="_blank" rel="noopener" class="perfilFLC-social-btn" title="Instagram">${ICONOS_SVG.instagram}</a>`;
         }
 
-        // WhatsApp
         if (persona.WHATSAPP && String(persona.WHATSAPP).trim() !== "") {
           const numLimpio = String(persona.WHATSAPP).replace(/\D/g, '');
           const url = persona.WHATSAPP.startsWith("http") ? persona.WHATSAPP : `https://wa.me/${numLimpio}`;
           redesHTML += `<a href="${url}" target="_blank" rel="noopener" class="perfilFLC-social-btn" title="WhatsApp">${ICONOS_SVG.whatsapp}</a>`;
         }
 
-        // Estructura de la tarjeta
         tarjetasHTML += `
-          <div class="perfilFLC-card">
+          <div class="perfilFLC-card" data-tilt>
             <div class="perfilFLC-logo-wrapper">
               <img 
                 src="${logo}" 
@@ -357,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <h3 class="perfilFLC-nombre">${nombre}</h3>
             <p class="perfilFLC-bio">${bio}</p>
             <div class="perfilFLC-socials">
-              ${redesHTML || '<span style="font-size:0.8rem; color:#666;">Sin redes vinculadas</span>'}
+              ${redesHTML || '<span style="font-size:0.8rem; color:var(--texto-secundario);">Sin redes vinculadas</span>'}
             </div>
           </div>
         `;
@@ -367,6 +436,29 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => {
       console.error("Error al cargar perfiles:", error);
-      contenedor.innerHTML = `<div class="perfilesFLC-loading" style="color:#9B111E;">⚠️ Error al cargar la lista de integrantes. Por favor, verifica el enlace de Google Sheets.</div>`;
+      contenedor.innerHTML = `<div class="perfilesFLC-loading" style="color:var(--color-rojo-brillante);">⚠️ Error al cargar la lista de integrantes. Por favor, verifica el enlace de Google Sheets.</div>`;
     });
+});
+
+// ==========================================
+// 8. CONTROLADOR MODO CLARO / OSCURO
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+  const btnTheme = document.getElementById('theme-toggle');
+  const iconTheme = document.getElementById('theme-icon');
+
+  const temaGuardado = localStorage.getItem('tema_flc') || 'dark';
+  document.documentElement.setAttribute('data-theme', temaGuardado);
+  if (iconTheme) iconTheme.textContent = temaGuardado === 'light' ? '☀️' : '🌙';
+
+  if (btnTheme) {
+    btnTheme.addEventListener('click', () => {
+      const temaActual = document.documentElement.getAttribute('data-theme');
+      const nuevoTema = temaActual === 'light' ? 'dark' : 'light';
+
+      document.documentElement.setAttribute('data-theme', nuevoTema);
+      localStorage.setItem('tema_flc', nuevoTema);
+      if (iconTheme) iconTheme.textContent = nuevoTema === 'light' ? '☀️' : '🌙';
+    });
+  }
 });

@@ -49,6 +49,7 @@
         <li><a href="#jornadasFLC">Jornadas</a></li>
         <li><a href="#reglamento">Reglamento</a></li>
         <li><a href="#clasificacion">Clasificación</a></li>
+        <li><a href="#perfiles">Aliados</a></li>
         <li><a href="https://www.instagram.com/fn_esports_oficial?igsh=eG04a2kyYWY1bXN0" target="_blank" class="menuFLC-btn-contacto">FN INSTAGRAM</a></li>
       </ul>
     </nav>
@@ -154,41 +155,44 @@
         <img src="img/somosFN.PNG" alt="Somos FN">
       </div>
 
+      <!-- BOTONES DE JORNADAS CON LOGO AUTOMÁTICO SEGÚN SHEETS -->
       <div class="div2 jornadasFLC-day" data-tilt>
         <a href="./JORNADAS/lunes/lunes.html">
-           <img src="./img/players/lunes.PNG" alt="Jornada Lunes" class="jornadasFLC-day-img">
+           <img id="img-jornada-lunes" src="./img/players/lunes.PNG" alt="Jornada Lunes" class="jornadasFLC-day-img">
            <span>LUNES</span>
         </a>
       </div>
       <div class="div3 jornadasFLC-day" data-tilt>
         <a href="./JORNADAS/martes/martes.html">
-           <img src="./img/players/martes.PNG" alt="Jornada Martes" class="jornadasFLC-day-img">
+           <img id="img-jornada-martes" src="./img/players/martes.PNG" alt="Jornada Martes" class="jornadasFLC-day-img">
            <span>MARTES</span>
         </a>
       </div>
       <div class="div4 jornadasFLC-day" data-tilt>
         <a href="./JORNADAS/miercoles/miercoles.html">
-           <img src="./img/players/miercoles2.PNG" alt="Jornada Miércoles" class="jornadasFLC-day-img">
+           <img id="img-jornada-miercoles" src="./img/players/miercoles2.PNG" alt="Jornada Miércoles" class="jornadasFLC-day-img">
            <span>MIÉRCOLES</span>
         </a>
       </div>
       <div class="div5 jornadasFLC-day" data-tilt>
         <a href="./JORNADAS/jueves/jueves.html">
-           <img src="./img/players/luuJueves.PNG" alt="Jornada Jueves" class="jornadasFLC-day-img">
+           <img id="img-jornada-jueves" src="./img/players/luuJueves.PNG" alt="Jornada Jueves" class="jornadasFLC-day-img">
            <span>JUEVES</span>
         </a>  
       </div>
       <div class="div6 jornadasFLC-day" data-tilt>
         <a href="./JORNADAS/viernes/viernes.html">
-           <img src="./img/players/viernesrsh.PNG" alt="Jornada Viernes" class="jornadasFLC-day-img">
+           <img id="img-jornada-viernes" src="./img/players/viernesrsh.PNG" alt="Jornada Viernes" class="jornadasFLC-day-img">
            <span>VIERNES</span>
         </a>
       </div>
 
-      <div class="div7 jornadasFLC-winner" data-tilt>
-        <img src="./img/ganador-placeholder.png" alt="Ganador de la jornada" class="winner-img">
+      <!-- REYES DE LA JORNADA / CAMPEÓN AUTOMÁTICO (LOGO Y NOMBRE) -->
+      <div class="div7 jornadasFLC-winner" id="jornadas-winner-box" data-tilt>
+        <img id="winner-img" src="img/icono.PNG" alt="Ganador de la jornada" class="winner-img">
         <div class="winner-overlay">
-          <span>👑 REYES DE LA JORNADA</span>
+          <span id="winner-tag">👑 REYES DE LA JORNADA</span>
+          <span id="winner-team-name" class="winner-team-name">Sincronizando...</span>
         </div>
       </div>
 
@@ -236,7 +240,7 @@
                 <div class="regla-icon">✕</div>
                 <div class="regla-info">
                   <h4>RESTRICCIÓN IMPORTANTE</h4>
-                  <p>Queda estrictamente prohibida la <strong>lista de eliminación</strong>. Su incumplimiento acarrea sanción directa.</p>
+                  <p>Queda strictly prohibida la <strong>lista de eliminación</strong>. Su incumplimiento acarrea sanción directa.</p>
                 </div>
               </div>
             </div>
@@ -409,50 +413,52 @@
   </section>
 
   <!-- ===================================================
-       CLASIFICACIÓN EN VIVO (TEXTO CENTRADO ARRIBA / TABLA ABAJO)
+       CLASIFICACIÓN EN VIVO CON SHOWCASE DEL TOP 1 (ROSTER)
        =================================================== -->
   <section class="clasificacionFLC-section" id="clasificacion">
-    <div class="clasificacionFLC-container">
+    <div class="clasificacionFLC-container revelar revelar-arriba">
       
-      <!-- BLOQUE DE TEXTO SUPERIOR -->
-      <div class="clasificacionFLC-info">
+      <!-- ENCABEZADO SUPERIOR CENTRADO Y ELEGANTE -->
+      <div class="clasificacionFLC-header">
         <div class="live-badge">
           <span class="pulse-dot"></span> TRANSMISIÓN EN VIVO & SYNC
         </div>
         <span class="clasificacionFLC-tag">TABLA OFICIAL DE POSICIONES</span>
-        <h2 class="clasificacionFLC-title">RANKING GENERAL <br><span class="highlight-street">FN LEAGUE SEASON 2</span></h2>
+        <h2 class="clasificacionFLC-title">RANKING GENERAL <span class="highlight-street">FN LEAGUE SEASON</span></h2>
         <div class="clasificacionFLC-divider"></div>
-        
-        <blockquote class="clasificacionFLC-quote">
-          <p>“El verdadero campeón no busca gloria fácil; busca rivales que lo obliguen a superarse.”</p>
-        </blockquote>
-        
-        <p class="clasificacionFLC-desc">
-          Nuestra base de datos oficial procesa en vivo cada kill y cada top alcanzado por las escuadras. Revisa el leaderboard actualizado al instante.
-        </p>
       </div>
 
-      <!-- TABLA OFICIAL ABAJO DE ANCHO COMPLETO -->
-      <div class="clasificacionFLC-tabla-wrapper">
-        <div class="tabla-header-bar">
-          <span class="tabla-title-text">👑 STANDINGS OFICIALES EN TIEMPO REAL</span>
-          <span class="tabla-status-pill">Sincronizado con Sheets</span>
+      <!-- GRID DE 2 COLUMNAS ALINEADAS A LA MISMA ALTURA -->
+      <div class="clasificacionFLC-grid">
+        
+        <!-- COLUMNA IZQUIERDA: ROSTER SHOWCASE DEL TOP 1 -->
+        <div id="top1-showcase-container" class="top1-showcase-box">
+          <div class="top1-loading">Sincronizando líder de la liga...</div>
         </div>
 
-        <div class="tabla-scroll-container">
-          <table class="tabla-flc" id="tabla-puntos-web">
-            <thead>
-              <tr>
-                <th style="text-align: center; padding: 25px; color: var(--color-dorado);">
-                  Sincronizando tabla de posiciones...
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Se inyecta dinámicamente mediante JS -->
-            </tbody>
-          </table>
+        <!-- COLUMNA DERECHA: TABLA OFICIAL DE POSICIONES GENERAL -->
+        <div class="clasificacionFLC-tabla-wrapper">
+          <div class="tabla-header-bar">
+            <span class="tabla-title-text">👑 STANDINGS OFICIALES EN TIEMPO REAL</span>
+            <span class="tabla-status-pill">Sincronizado con Sheets</span>
+          </div>
+
+          <div class="tabla-scroll-container">
+            <table class="tabla-flc" id="tabla-puntos-web">
+              <thead>
+                <tr>
+                  <th style="text-align: center; padding: 25px; color: var(--color-dorado);">
+                    Sincronizando tabla de posiciones...
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Se inyecta dinámicamente mediante JS -->
+              </tbody>
+            </table>
+          </div>
         </div>
+
       </div>
 
     </div>
@@ -460,55 +466,43 @@
 
   <!-- BANNER FRASES EN GRID DE IMPACTO -->
   <section class="urban-phrases-grid">
-    <div class="phrase-card">
+    <div class="phrase-card" data-tilt>
       <span class="phrase-num">01</span>
       <h4>DISCIPLINA</h4>
       <p>"Las batallas se ganan en el entrenamiento; en la partida solo se recoge la victoria."</p>
     </div>
-    <div class="phrase-card">
+    <div class="phrase-card" data-tilt>
       <span class="phrase-num">02</span>
       <h4>LEALTAD</h4>
       <p>"Tu escuadra es tu familia en el mapa. Cubre la espalda o cae en el intento."</p>
     </div>
-    <div class="phrase-card">
+    <div class="phrase-card" data-tilt>
       <span class="phrase-num">03</span>
       <h4>HONOR</h4>
       <p>"Ganar sin nivel no sirve de nada. Juega limpio, impacta fuerte y deja tu firma."</p>
     </div>
   </section>
 
-<!-- seccion para organizaciones invitacionales -->
- <!-- ===================================================
-     COMPONENTE: PERFILES Y EQUIPOS FLC (perfilesFLC)
-     =================================================== -->
-<section class="perfilesFLC-section" id="perfiles">
-  <div class="perfilesFLC-container">
-    
-    <!-- Encabezado de la Sección -->
-    <div class="perfilesFLC-header">
-      <span class="perfilesFLC-tag">Comunidad & Creadores</span>
-      <h2 class="perfilesFLC-title">ORGANIZACIONES ALIADAS <br><span class="text-dorado">FN LEAGUE - FLC</span></h2>
-      <div class="perfilesFLC-divider"></div>
-    </div>
-
-    <!-- Rejilla donde JS inyectará las tarjetas -->
-    <div class="perfilesFLC-grid" id="contenedor-perfiles-flc">
-      <div class="perfilesFLC-loading">
-        Cargando integrantes desde Google Sheets...
+  <!-- SECCIÓN PERFILES / ORGANIZACIONES ALIADAS -->
+  <section class="perfilesFLC-section" id="perfiles">
+    <div class="perfilesFLC-container">
+      
+      <!-- Encabezado de la Sección -->
+      <div class="perfilesFLC-header">
+        <span class="perfilesFLC-tag">Comunidad & Creadores</span>
+        <h2 class="perfilesFLC-title">ORGANIZACIONES ALIADAS <br><span class="text-dorado">FN LEAGUE - FLC</span></h2>
+        <div class="perfilesFLC-divider"></div>
       </div>
+
+      <!-- Rejilla donde JS inyectará las tarjetas -->
+      <div class="perfilesFLC-grid" id="contenedor-perfiles-flc">
+        <div class="perfilesFLC-loading">
+          Cargando integrantes desde Google Sheets...
+        </div>
+      </div>
+
     </div>
-
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
+  </section>
 
   <!-- BANNER COACHING ESTRATÉGICO -->
   <section class="coachingFLC-container">
