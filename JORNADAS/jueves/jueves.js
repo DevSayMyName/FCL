@@ -7,10 +7,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const contenedorGrid = document.getElementById("contenedor-fotos-grid");
   const mensajeEstado = document.getElementById("mensaje-estado");
 
+  // Orden oficial de cruces según el día
+  const ORDEN_GRUPOS_POR_DIA = {
+    lunes: ["AXB", "CXD"],
+    martes: ["AXC", "BXD"],
+    miercoles: ["AXD", "BXC"],
+    jueves: ["AXB", "CXD"],
+    viernes: ["AXC", "BXD"]
+  };
+
   function normalizar(texto) {
     return texto
       ? texto.toString().trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
       : "";
+  }
+
+  function formatearGrupo(rawGrupo) {
+    if (!rawGrupo || rawGrupo.toString().trim() === "") {
+      return { clave: "GENERAL", etiqueta: "RESULTADOS DE SALA" };
+    }
+    const limpia = rawGrupo.toString().trim().toUpperCase();
+    const sinEspacios = limpia.replace(/\s+/g, "");
+
+    const mapaEtiquetas = {
+      AXB: "GRUPO A x B",
+      CXD: "GRUPO C x D",
+      AXC: "GRUPO A x C",
+      BXD: "GRUPO B x D",
+      AXD: "GRUPO A x D",
+      BXC: "GRUPO B x C"
+    };
+
+    return {
+      clave: sinEspacios,
+      etiqueta: mapaEtiquetas[sinEspacios] || `GRUPO ${limpia}`
+    };
   }
 
   fetch(GOOGLE_SHEET_URL)
@@ -24,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const hoja = workbook.Sheets[workbook.SheetNames[0]];
       const filas = XLSX.utils.sheet_to_json(hoja);
 
-      // 1. Filtrar filas del día Lunes
+      // 1. Filtrar filas del día Jueves
       const fotosDia = filas.filter(f => normalizar(f.DIA) === normalizar(DIA_ACTUAL));
 
       if (fotosDia.length === 0) {
@@ -65,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       mostrarMensaje("Ocurrió un error al cargar las fotos desde Google Sheets.");
     });
 
-  // Función para agrupar fotos por NOMBRE_SALA
+  // Agrupa fotos por NOMBRE_SALA y dentro de cada sala por GRUPO
   function cargarSalasDeSemana(semanaSeleccionada, fotosDia) {
     const fotosSemana = fotosDia.filter(f => f.SEMANA && f.SEMANA.toString().trim() === semanaSeleccionada);
     contenedorSalas.innerHTML = "";
@@ -75,23 +106,32 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Agrupamos en un Map: NombreSala -> Lista de URLs
+    // Map: NombreSala -> Map(claveGrupo -> { clave, etiqueta, urls: [] })
     const salasMap = new Map();
 
     fotosSemana.forEach(item => {
       const nombreSala = item.NOMBRE_SALA ? item.NOMBRE_SALA.toString().trim() : "Sala";
-      
+      const infoGrupo = formatearGrupo(item.GRUPO);
+
       if (!salasMap.has(nombreSala)) {
-        salasMap.set(nombreSala, []);
+        salasMap.set(nombreSala, new Map());
+      }
+
+      const gruposDeSala = salasMap.get(nombreSala);
+      if (!gruposDeSala.has(infoGrupo.clave)) {
+        gruposDeSala.set(infoGrupo.clave, {
+          clave: infoGrupo.clave,
+          etiqueta: infoGrupo.etiqueta,
+          urls: []
+        });
       }
 
       if (item.URL_FOTO) {
-        // Separa URLs si hay varias por espacio, coma o salto de línea
         const rawUrls = item.URL_FOTO.toString().split(/[\n,\s]+/);
         rawUrls.forEach(u => {
           const urlLimpia = u.trim();
           if (urlLimpia.startsWith("http")) {
-            salasMap.get(nombreSala).push(urlLimpia);
+            gruposDeSala.get(infoGrupo.clave).urls.push(urlLimpia);
           }
         });
       }
@@ -99,32 +139,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let esPrimerBoton = true;
 
-    salasMap.forEach((urlsArray, nombreSala) => {
+    salasMap.forEach((gruposDeSalaMap, nombreSala) => {
       const btnSala = document.createElement("button");
       btnSala.classList.add("btn-sala");
       btnSala.textContent = nombreSala;
 
       if (esPrimerBoton) {
         btnSala.classList.add("active");
-        renderizarFotos(urlsArray);
+        renderizarFotosPorGrupo(gruposDeSalaMap);
         esPrimerBoton = false;
       }
 
       btnSala.addEventListener("click", () => {
         document.querySelectorAll(".btn-sala").forEach(b => b.classList.remove("active"));
         btnSala.classList.add("active");
-        renderizarFotos(urlsArray);
+        renderizarFotosPorGrupo(gruposDeSalaMap);
       });
 
       contenedorSalas.appendChild(btnSala);
     });
   }
 
-  // Renderiza TODAS las fotos pertenecientes a la sala seleccionada
-  function renderizarFotos(urlsArray) {
+  // Renderiza los grupos de la sala seleccionada (Arriba A x B, Abajo C x D)
+  function renderizarFotosPorGrupo(gruposDeSalaMap) {
     contenedorGrid.innerHTML = "";
 
-    if (!urlsArray || urlsArray.length === 0) {
+    const ordenEsperado = ORDEN_GRUPOS_POR_DIA[normalizar(DIA_ACTUAL)] || [];
+    const listaGrupos = Array.from(gruposDeSalaMap.values()).sort((a, b) => {
+      const idxA = ordenEsperado.indexOf(a.clave);
+      const idxB = ordenEsperado.indexOf(b.clave);
+      if (idxA === -1 && idxB === -1) return 0;
+      if (idxA === -1) return 1;
+      if (idxB === -1) return -1;
+      return idxA - idxB;
+    });
+
+    const hayFotos = listaGrupos.some(g => g.urls.length > 0);
+    if (!hayFotos) {
       mensajeEstado.textContent = "No hay fotos adjuntas para esta sala.";
       mensajeEstado.style.display = "block";
       return;
@@ -132,12 +183,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     mensajeEstado.style.display = "none";
 
-    urlsArray.forEach((url, i) => {
-      const img = document.createElement("img");
-      img.src = url;
-      img.alt = `Captura ${i + 1}`;
-      img.classList.add("img-responsive-flc");
-      contenedorGrid.appendChild(img);
+    listaGrupos.forEach(grupoObj => {
+      if (grupoObj.urls.length === 0) return;
+
+      const bloqueGrupo = document.createElement("div");
+      bloqueGrupo.classList.add("grupo-bloque-flc");
+
+      // Encabezado del Grupo (ej. GRUPO A x B)
+      const headerGrupo = document.createElement("div");
+      headerGrupo.classList.add("grupo-header-flc");
+      headerGrupo.innerHTML = `
+        <h3 class="grupo-titulo-flc">⚔️ ${grupoObj.etiqueta}</h3>
+        <span class="grupo-contador-pill">${grupoObj.urls.length} ${grupoObj.urls.length === 1 ? "Captura" : "Capturas"}</span>
+      `;
+      bloqueGrupo.appendChild(headerGrupo);
+
+      // Contenedor de las 2 capturas del grupo
+      const gridInterno = document.createElement("div");
+      gridInterno.classList.add("fotos-grid");
+
+      grupoObj.urls.forEach((url, i) => {
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = `${grupoObj.etiqueta} - Captura ${i + 1}`;
+        img.classList.add("img-responsive-flc");
+        img.loading = "lazy";
+        gridInterno.appendChild(img);
+      });
+
+      bloqueGrupo.appendChild(gridInterno);
+      contenedorGrid.appendChild(bloqueGrupo);
     });
   }
 

@@ -2,7 +2,6 @@
    1. FONDO GENERAL Y BASE DE LA PANTALLA
    =================================================== */
 html, body {
-  background-color: var(--bg-principal) !important;
   color: var(--texto-principal);
   min-height: 100vh;
   margin: 0;
@@ -11,21 +10,19 @@ html, body {
 }
 
 /* ===================================================
-   2. VISOR MULTI-IMAGEN
+   2. VISOR MULTI-IMAGEN POR SALA Y GRUPO
    =================================================== */
 .visor-capturas-section {
-  background-color: var(--bg-principal);
-  min-height: calc(100vh - 100px); /* Asegura cubrir el 100% del alto de la ventana */
-  padding: 3.5rem 1.2rem;
+  min-height: calc(100vh - 100px);
+  padding: 3.5rem 1.2rem 5rem 1.2rem;
   width: 100%;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  transition: background-color 0.3s ease;
 }
 
 .visor-capturas-container {
-  max-width: 950px;
+  max-width: 960px;
   width: 100%;
   text-align: center;
   display: flex;
@@ -39,31 +36,32 @@ html, body {
 }
 
 .visor-tag {
-  color: var(--color-rojo);
+  color: var(--color-rojo-brillante);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 2.5px;
-  font-weight: 700;
+  font-weight: 800;
   display: block;
   margin-bottom: 0.4rem;
 }
 
 .visor-titulo {
   color: var(--texto-principal);
-  font-size: 2.2rem;
-  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 900;
   margin: 0 0 0.8rem 0;
   transition: color 0.3s ease;
 }
 
 .text-dorado { 
-  color: var(--color-dorado); 
+  color: var(--color-dorado-brillante); 
+  text-shadow: 0 0 15px var(--color-dorado-glow);
 }
 
 .visor-divider {
-  width: 50px;
+  width: 60px;
   height: 3px;
-  background-color: var(--color-dorado);
+  background-color: var(--color-rojo-fuego);
   margin: 0 auto;
 }
 
@@ -73,26 +71,27 @@ html, body {
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 }
 
 .btn-semana {
   background: var(--bg-tarjeta);
   color: var(--texto-secundario);
-  border: 1px solid var(--borde-tarjeta);
-  padding: 6px 16px;
+  border: 1px solid var(--borde-dorado);
+  padding: 7px 18px;
   border-radius: 20px;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .btn-semana.active, 
 .btn-semana:hover {
-  background: rgba(212, 175, 55, 0.15);
-  color: var(--color-dorado);
-  border-color: var(--color-dorado);
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--color-dorado-brillante);
+  border-color: var(--color-dorado-brillante);
+  box-shadow: 0 0 12px var(--color-dorado-glow);
 }
 
 .botones-salas {
@@ -100,17 +99,20 @@ html, body {
   gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
 }
 
 .btn-sala {
   background-color: var(--bg-tarjeta);
   color: var(--texto-principal);
   border: 1px solid var(--borde-tarjeta);
-  padding: 10px 22px;
+  padding: 10px 24px;
   border-radius: 6px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-family: var(--fuente-titulos);
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -118,57 +120,107 @@ html, body {
 .btn-sala.active, 
 .btn-sala:hover {
   background-color: var(--color-dorado);
-  color: var(--color-negro);
-  border-color: var(--color-dorado);
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+  color: #08080A;
+  border-color: var(--color-dorado-brillante);
+  box-shadow: 0 4px 15px var(--color-dorado-glow);
 }
 
-/* --- CONTENEDOR MULTI-IMAGEN --- */
-.contenedor-foto-main {
+/* --- CONTENEDOR DE BLOQUES POR GRUPO DENTRO DE LA SALA --- */
+.grupos-sala-wrapper {
   width: 100%;
-  max-width: 900px;
-  background-color: var(--bg-tarjeta);
-  border-radius: 12px;
-  border: 1px solid var(--borde-tarjeta);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  padding: 15px;
-  box-sizing: border-box;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  max-width: 920px;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem; /* Espacio entre el bloque de arriba y el de abajo */
 }
 
-/* Grilla apilada verticalmente */
+.grupo-bloque-flc {
+  width: 100%;
+  background-color: var(--bg-tarjeta);
+  border-radius: 14px;
+  border: 1px solid var(--borde-dorado);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.grupo-bloque-flc:hover {
+  border-color: var(--color-dorado-brillante);
+}
+
+.grupo-header-flc {
+  background: linear-gradient(90deg, rgba(225, 6, 0, 0.25) 0%, rgba(18, 18, 26, 0.98) 50%, rgba(212, 175, 55, 0.2) 100%);
+  padding: 0.95rem 1.5rem;
+  border-bottom: 2px solid var(--borde-tarjeta);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.grupo-titulo-flc {
+  font-family: var(--fuente-titulos);
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--color-dorado-brillante);
+  letter-spacing: 1.5px;
+  margin: 0;
+}
+
+.grupo-contador-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--borde-sutil);
+  color: var(--texto-secundario);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Grilla apilada verticalmente para las 2 capturas del grupo */
 .fotos-grid {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
   width: 100%;
+  padding: 18px;
   align-items: center;
+  box-sizing: border-box;
 }
 
 /* Estilo individual para cada foto cargada */
 .img-responsive-flc {
   width: 100%;
-  max-width: 850px;
+  max-width: 860px;
   height: auto;
   max-height: 600px;
   object-fit: contain;
   border-radius: 8px;
-  border: 1px solid var(--borde-tarjeta);
+  border: 1px solid var(--borde-sutil);
+  background-color: #08080A;
   display: block;
 }
 
 .mensaje-estado {
+  background-color: var(--bg-tarjeta);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
   color: var(--texto-secundario);
   font-size: 0.95rem;
+  font-weight: 600;
   padding: 2rem 1rem;
+  width: 100%;
   margin: 0;
-  transition: color 0.3s ease;
 }
 
 /* --- RESPONSIVE MOBILE --- */
 @media screen and (max-width: 600px) {
-  .contenedor-foto-main { padding: 8px; }
-  .fotos-grid { gap: 12px; }
+  .visor-capturas-section { padding: 2.5rem 0.8rem 4rem 0.8rem; }
+  .grupo-header-flc { justify-content: center; text-align: center; }
+  .fotos-grid { padding: 10px; gap: 12px; }
   .img-responsive-flc { max-height: 450px; }
-  .btn-sala { padding: 8px 16px; font-size: 0.85rem; }
+  .btn-sala { padding: 8px 16px; font-size: 0.82rem; }
 }
